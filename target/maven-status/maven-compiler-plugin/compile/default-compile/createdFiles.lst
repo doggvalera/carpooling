@@ -1,3 +1,5 @@
+lv\ctco\controllers\RequestsController.class
 lv\ctco\CarpoolingApplication.class
+lv\ctco\controllers\OffersController.class
 lv\ctco\Entities\User.class
 lv\ctco\controllers\UserController.class
