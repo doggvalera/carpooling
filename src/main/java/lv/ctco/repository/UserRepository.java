@@ -1,4 +1,4 @@
-package lv.ctco.controllers;
+package lv.ctco.repository;
 
 import lv.ctco.Entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;

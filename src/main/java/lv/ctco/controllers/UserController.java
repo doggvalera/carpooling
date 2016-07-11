@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 
+import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
