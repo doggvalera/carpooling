@@ -1,8 +1,10 @@
 lv\ctco\CarpoolingApplication.class
 lv\ctco\Entities\Request.class
+lv\ctco\Entities\DateTimeRange.class
+lv\ctco\controllers\UserRepository.class
+lv\ctco\Entities\Coordinate.class
 lv\ctco\controllers\UserController.class
 lv\ctco\controllers\RequestsController.class
-lv\ctco\Entities\DataTimeRange.class
 lv\ctco\Entities\Ride.class
 lv\ctco\Entities\Offer.class
 lv\ctco\controllers\OffersController.class
