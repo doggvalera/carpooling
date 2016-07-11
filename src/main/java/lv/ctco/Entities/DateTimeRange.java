@@ -17,4 +17,19 @@ public class DateTimeRange {
         return true;
     }
 
+    public LocalDateTime getErliestDeparture() {
+        return erliestDeparture;
+    }
+
+    public void setErliestDeparture(LocalDateTime erliestDeparture) {
+        this.erliestDeparture = erliestDeparture;
+    }
+
+    public LocalDateTime getLastesDeparture() {
+        return lastesDeparture;
+    }
+
+    public void setLastesDeparture(LocalDateTime lastesDeparture) {
+        this.lastesDeparture = lastesDeparture;
+    }
 }
