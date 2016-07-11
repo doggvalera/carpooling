@@ -4,10 +4,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "offers")
-public class Offers {
+@Table(name = "offer")
+public class Offer {
 
     private String title;
+    @Id
+    @Column(name = "ID")
+    @GeneratedValue
     private int id;
     private Date date;
 
