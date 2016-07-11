@@ -12,7 +12,8 @@ public class Offer {
     @Column(name ="ID")
     @GeneratedValue
     private int id;
-    @Column(name = "DRIVER")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
     @Column(name = "ADDRESS")
     private String address;
