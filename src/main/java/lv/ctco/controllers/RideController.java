@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/ride")
+@RequestMapping(name = "/rides")
 public class RideController {
 
     @Autowired
     RideRepository rideRepository;
-    @Autowired
-    UserRepository userRepository;
+//    @Autowired
+//    UserRepository userRepository;
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
@@ -31,20 +31,20 @@ public class RideController {
         return new ResponseEntity<>(rideRepository.findAll(), HttpStatus.OK);
     }
 
-    @Transactional
-    @RequestMapping(path = "/bydriver/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<?> showRidesByDriver(@PathVariable("ID") int id) {
-        User user = userRepository.findOne(id);
-        List<Ride> rideList = rideRepository.getByDriver(user);
-        return new ResponseEntity<>(rideList, HttpStatus.OK);
-    }
+//    @Transactional
+//    @RequestMapping(path = "/bydriver/{ID}", method = RequestMethod.GET)
+//    public ResponseEntity<?> showRidesByDriver(@PathVariable("ID") int id) {
+//        User user = userRepository.findOne(id);
+//        List<Ride> rideList = rideRepository.getByDriver(user);
+//        return new ResponseEntity<>(rideList, HttpStatus.OK);
+//    }
 
-    @Transactional
-    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
-        rideRepository.findAll();
-        User user = userRepository.findOne(id);
-        List<Ride> rideList = rideRepository.getByPassenger(user);
-        return new ResponseEntity<>(rideList, HttpStatus.OK);
-    }
+//    @Transactional
+//    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
+//    public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
+//        rideRepository.findAll();
+//        User user = userRepository.findOne(id);
+//        List<Ride> rideList = rideRepository.getByPassenger(user);
+//        return new ResponseEntity<>(rideList, HttpStatus.OK);
+//    }
 }
