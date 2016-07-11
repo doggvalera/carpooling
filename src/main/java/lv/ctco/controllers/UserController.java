@@ -1,4 +1,4 @@
-package lv.ctco;
+package lv.ctco.controllers;
 
 public class UserController {
 }
