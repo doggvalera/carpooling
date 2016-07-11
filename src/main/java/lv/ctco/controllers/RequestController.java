@@ -1,7 +1,7 @@
 package lv.ctco.controllers;
 
 
-import lv.ctco.Entities.Request;
+import lv.ctco.entities.Request;
 import lv.ctco.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(name = "/rides/requests")
+@RequestMapping(path = "/requests")
 public class RequestController {
 
     @Autowired

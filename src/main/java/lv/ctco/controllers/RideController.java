@@ -1,7 +1,7 @@
 package lv.ctco.controllers;
 
-import lv.ctco.Entities.Ride;
-import lv.ctco.Entities.User;
+import lv.ctco.entities.Ride;
+import lv.ctco.entities.User;
 import lv.ctco.repository.RideRepository;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/ride")
+@RequestMapping(path = "ride")
 public class RideController {
 
     @Autowired
@@ -44,7 +45,7 @@ public class RideController {
     public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
         rideRepository.findAll();
         User user = userRepository.findOne(id);
-        List<Ride> rideList = rideRepository.getByPassenger(user);
+        List<Ride> rideList = new ArrayList<>(); //rideRepository.getByPassenger(user);
         return new ResponseEntity<>(rideList, HttpStatus.OK);
     }
 }

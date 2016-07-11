@@ -1,7 +1,7 @@
 package lv.ctco.controllers;
 
-import lv.ctco.Entities.Offer;
-import lv.ctco.Entities.User;
+import lv.ctco.entities.Offer;
+import lv.ctco.entities.User;
 import lv.ctco.repository.OfferRepository;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/rides/offer")
+@RequestMapping(path = "/offer")
 public class OfferController {
 
     @Autowired
