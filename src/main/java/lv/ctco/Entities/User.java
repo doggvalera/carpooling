@@ -7,15 +7,17 @@ import javax.persistence.*;
 @Table(name = "users")
 public class User {
 
-
     @Id
     @Column(name = "ID")
     @GeneratedValue
     private int id;
     @Column(name = "NAME")
     private String name;
+    @Column(name = "EMAIL")
+    private String email;
     @Column(name = "SURNAME")
     private String surname;
+    @Column(name = "PASSWORD")
     private String password;
 
     public User() {
@@ -57,5 +59,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
