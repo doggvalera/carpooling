@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: carpooling
-Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: nikita.smirnov
-Implementation-Vendor-Id: lv.ctco
-Created-By: IntelliJ IDEA
-Build-Jdk: 1.8.0_51
-Main-Class: ${start-class}
-
