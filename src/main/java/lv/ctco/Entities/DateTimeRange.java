@@ -8,28 +8,28 @@ import java.time.LocalDateTime;
 public class DateTimeRange {
 
     @Column(name = "START_DATE")
-    private LocalDateTime erliestDeparture;
+    private LocalDateTime earliestDeparture;
     @Column(name = "END_DATE")
-    private LocalDateTime lastesDeparture;
+    private LocalDateTime latestDeparture;
 
     public boolean overlaps() {
 
         return true;
     }
 
-    public LocalDateTime getErliestDeparture() {
-        return erliestDeparture;
+    public LocalDateTime getEarliestDeparture() {
+        return earliestDeparture;
     }
 
-    public void setErliestDeparture(LocalDateTime erliestDeparture) {
-        this.erliestDeparture = erliestDeparture;
+    public void setEarliestDeparture(LocalDateTime earliestDeparture) {
+        this.earliestDeparture = earliestDeparture;
     }
 
-    public LocalDateTime getLastesDeparture() {
-        return lastesDeparture;
+    public LocalDateTime getLatestDeparture() {
+        return latestDeparture;
     }
 
-    public void setLastesDeparture(LocalDateTime lastesDeparture) {
-        this.lastesDeparture = lastesDeparture;
+    public void setLatestDeparture(LocalDateTime latestDeparture) {
+        this.latestDeparture = latestDeparture;
     }
 }
