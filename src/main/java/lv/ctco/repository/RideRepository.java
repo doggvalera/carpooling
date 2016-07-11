@@ -11,4 +11,8 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     @Query("select r from Ride r where r.offer.user = ?1")
     List<Ride> getByDriver(User driver);
+
+    @Query("select r from Ride r where r.request.user = ?1")
+    List<Ride> getByPassenger(User driver);
+
 }

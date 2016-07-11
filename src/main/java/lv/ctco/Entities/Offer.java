@@ -1,4 +1,3 @@
-
 package lv.ctco.Entities;
 
 import javax.persistence.*;
@@ -26,6 +25,7 @@ public class Offer {
     private String carDescription;
     @Column(name = "PASSENGERS")
     private int passengersAmount;
+
     public int getId() {
         return id;
     }
