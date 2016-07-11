@@ -2,22 +2,24 @@
 package lv.ctco.Entities;
 
 import javax.persistence.*;
-import java.util.Date;
+
 
 @Entity
 @Table(name = "offers")
 public class Offer {
     @Id
-    @Column(name ="ID")
+    @Column(name = "ID")
     @GeneratedValue
     private int id;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-    @Column(name = "ADDRESS")
-    private String address;
+    @Column(name = "ORIGIN")
+    private Coordinate origin;
+    @Column(name = "DESTINATION")
+    private Coordinate destination;
     @Column(name = "DATE")
-    private Date date;
+    private DateTimeRange date;
     @Column(name = "TIME")
     private String time;
     @Column(name = "DELAY")
@@ -43,20 +45,28 @@ public class Offer {
         this.user = user;
     }
 
-    public Date getDate() {
+    public Coordinate getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Coordinate origin) {
+        this.origin = origin;
+    }
+
+    public Coordinate getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Coordinate destination) {
+        this.destination = destination;
+    }
+
+    public DateTimeRange getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTimeRange date) {
         this.date = date;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
     }
 
     public String getTime() {
