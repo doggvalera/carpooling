@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-<<<<<<< HEAD
-=======
+
 import javax.transaction.Transactional;
->>>>>>> 848f94c3d521f76240a2b9374bbf7af86a078cdd
+
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-<<<<<<< HEAD
-@RequestMapping(path = "ride")
-=======
 @RequestMapping(path = "/rides")
->>>>>>> 848f94c3d521f76240a2b9374bbf7af86a078cdd
 public class RideController {
 
     @Autowired
@@ -52,11 +47,7 @@ public class RideController {
     public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
         rideRepository.findAll();
         User user = userRepository.findOne(id);
-<<<<<<< HEAD
         List<Ride> rideList = new ArrayList<>(); //rideRepository.getByPassenger(user);
-=======
-        List<Ride> rideList = new ArrayList<>();  //rideRepository.getByPassenger(user);
->>>>>>> 848f94c3d521f76240a2b9374bbf7af86a078cdd
         return new ResponseEntity<>(rideList, HttpStatus.OK);
     }
 }
