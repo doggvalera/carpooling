@@ -24,12 +24,12 @@ public class RideController {
 //    @Autowired
 //    UserRepository userRepository;
 
-    @Transactional
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> showAllRides() {
-        rideRepository.findAll();
-        return new ResponseEntity<>(rideRepository.findAll(), HttpStatus.OK);
-    }
+//    @Transactional
+//    @RequestMapping(method = RequestMethod.GET)
+//    public ResponseEntity<?> showAllRides() {
+//        rideRepository.findAll();
+//        return new ResponseEntity<>(rideRepository.findAll(), HttpStatus.OK);
+//    }
 
 //    @Transactional
 //    @RequestMapping(path = "/bydriver/{ID}", method = RequestMethod.GET)
@@ -38,7 +38,7 @@ public class RideController {
 //        List<Ride> rideList = rideRepository.getByDriver(user);
 //        return new ResponseEntity<>(rideList, HttpStatus.OK);
 //    }
-
+//
 //    @Transactional
 //    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
 //    public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
