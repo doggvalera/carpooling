@@ -1,7 +1,6 @@
 package lv.ctco.Entities;
 
 import javax.persistence.*;
-import java.util.Date;
 
 
 @Entity
@@ -12,12 +11,16 @@ public class Request {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @Column(name = "ADDRESS")
-    private String address;
+    @Column(name = "USER")
+    private User user;
     @Column(name = "DATE")
-    private Date date;
-    @Column(name = "TIME")
-    private String time;
+    private DateTimeRange date;
+    @Column(name = "RADIUS")
+    private double radius;
+    @Column(name = "ORIGIN")
+    private Coordinate origin;
+    @Column(name = "DESTINATION")
+    private Coordinate destination;
 
     public int getId() {
         return id;
@@ -27,27 +30,43 @@ public class Request {
         this.id = id;
     }
 
-    public String getAddress() {
-        return address;
+    public User getUser() {
+        return user;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Date getDate() {
+    public DateTimeRange getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(DateTimeRange date) {
         this.date = date;
     }
 
-    public String getTime() {
-        return time;
+    public double getRadius() {
+        return radius;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setRadius(double radius) {
+        this.radius = radius;
+    }
+
+    public Coordinate getOrigin() {
+        return origin;
+    }
+
+    public void setOrigin(Coordinate origin) {
+        this.origin = origin;
+    }
+
+    public Coordinate getDestination() {
+        return destination;
+    }
+
+    public void setDestination(Coordinate destination) {
+        this.destination = destination;
     }
 }
