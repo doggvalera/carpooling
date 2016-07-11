@@ -5,8 +5,8 @@ import java.util.Date;
 
 
 @Entity
-@Table(name = "requests")
-public class Requests {
+@Table(name = "request")
+public class Request {
 
     @Id
     @Column(name = "ID")
