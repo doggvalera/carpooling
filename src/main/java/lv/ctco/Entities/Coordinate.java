@@ -17,7 +17,6 @@ public class Coordinate {
         return null;
     }
 
-
     public double getLatitude() {
         return latitude;
     }
