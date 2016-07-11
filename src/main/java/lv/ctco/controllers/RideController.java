@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping(name = "/rides")
+@RequestMapping(name = "/ride")
 public class RideController {
 
     @Autowired
@@ -40,19 +39,12 @@ public class RideController {
         return new ResponseEntity<>(rideList, HttpStatus.OK);
     }
 
-//    @Transactional
-//    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
-//    public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
-//        rideRepository.findAll();
-//        List<Ride> passengerList = new ArrayList<>();
-//        for (int i = 0; i < rideRepository.findAll().size(); i++) {
-//            for(int j=0; j )
-//            if (rideRepository.findAll().get(i).getRequestList().get(i).getId() == id) {
-//                passengerList.add(rideRepository.findOne(i));
-//            }
-//        }
-//        return new ResponseEntity<>(passengerList, HttpStatus.OK);
-//    }
-
-//}
+    @Transactional
+    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
+    public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
+        rideRepository.findAll();
+        User user = userRepository.findOne(id);
+        List<Ride> rideList = rideRepository.getByPassenger(user);
+        return new ResponseEntity<>(rideList, HttpStatus.OK);
+    }
 }
