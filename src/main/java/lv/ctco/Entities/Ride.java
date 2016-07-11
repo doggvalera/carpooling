@@ -1,5 +1,4 @@
 package lv.ctco.Entities;
 
-public class DataTimeRange {
-
+public class Ride {
 }
