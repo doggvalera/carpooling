@@ -13,7 +13,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+<<<<<<< HEAD
 @RequestMapping(path = "/offer")
+=======
+@RequestMapping(path = "/rides/offer")
+>>>>>>> 848f94c3d521f76240a2b9374bbf7af86a078cdd
 public class OfferController {
 
     @Autowired
