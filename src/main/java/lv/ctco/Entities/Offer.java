@@ -7,7 +7,6 @@ import java.util.Date;
 @Entity
 @Table(name = "offers")
 public class Offer {
-
     @Id
     @Column(name ="ID")
     @GeneratedValue

@@ -11,7 +11,8 @@ public class Request {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @Column(name = "USER")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
     @Column(name = "DATE")
     private DateTimeRange date;
