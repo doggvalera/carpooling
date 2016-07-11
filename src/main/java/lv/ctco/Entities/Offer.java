@@ -14,11 +14,9 @@ public class Offer {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-    @Column(name = "ORIGIN")
-    private Coordinate origin;
-    @Column(name = "DESTINATION")
-    private Coordinate destination;
-    @Column(name = "DATE")
+    @Embedded
+    private Coordinate coordinate;
+    @Embedded
     private DateTimeRange date;
     @Column(name = "TIME")
     private String time;
@@ -28,7 +26,6 @@ public class Offer {
     private String carDescription;
     @Column(name = "PASSENGERS")
     private int passengersAmount;
-
     public int getId() {
         return id;
     }
@@ -43,22 +40,6 @@ public class Offer {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Coordinate getOrigin() {
-        return origin;
-    }
-
-    public void setOrigin(Coordinate origin) {
-        this.origin = origin;
-    }
-
-    public Coordinate getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Coordinate destination) {
-        this.destination = destination;
     }
 
     public DateTimeRange getDate() {
@@ -79,6 +60,14 @@ public class Offer {
 
     public int getDelayTime() {
         return delayTime;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 
     public void setDelayTime(int delay) {
