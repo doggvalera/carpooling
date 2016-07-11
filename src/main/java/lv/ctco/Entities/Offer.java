@@ -7,7 +7,6 @@ import javax.persistence.*;
 @Entity
 @Table(name = "offers")
 public class Offer {
-
     @Id
     @Column(name = "ID")
     @GeneratedValue

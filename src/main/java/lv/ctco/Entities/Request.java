@@ -11,16 +11,15 @@ public class Request {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @Column(name = "USER")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
-    @Column(name = "DATE")
+    @Embedded
     private DateTimeRange date;
     @Column(name = "RADIUS")
     private double radius;
-    @Column(name = "ORIGIN")
-    private Coordinate origin;
-    @Column(name = "DESTINATION")
-    private Coordinate destination;
+    @Embedded
+    private Coordinate coordinate;
 
     public int getId() {
         return id;
@@ -54,19 +53,11 @@ public class Request {
         this.radius = radius;
     }
 
-    public Coordinate getOrigin() {
-        return origin;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
-    public void setOrigin(Coordinate origin) {
-        this.origin = origin;
-    }
-
-    public Coordinate getDestination() {
-        return destination;
-    }
-
-    public void setDestination(Coordinate destination) {
-        this.destination = destination;
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
     }
 }
