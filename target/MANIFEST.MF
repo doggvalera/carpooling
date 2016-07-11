@@ -1,0 +1,21 @@
+<<<<<<< HEAD
+Manifest-Version: 1.0
+Implementation-Title: carpooling
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: vadim.rozhkalns
+Implementation-Vendor-Id: lv.ctco
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_51
+Main-Class: ${start-class}
+
+=======
+Manifest-Version: 1.0
+Implementation-Title: carpooling
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: nikita.smirnov
+Implementation-Vendor-Id: lv.ctco
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_51
+Main-Class: ${start-class}
+
+>>>>>>> 81d07b5243eb7c3baa937cd7f3ca506ee71e6266
