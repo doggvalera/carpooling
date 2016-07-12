@@ -25,16 +25,12 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
+    @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> userAdd(@RequestBody User user, UriComponentsBuilder b) {
-        UriComponents uriComponents = b.path("/users" + "/{id}").buildAndExpand(user.getId());
+    public ResponseEntity<?> userAdd(@RequestBody User user) {
 
         userRepository.save(user);
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(uriComponents.toUri());
-
-        return new ResponseEntity<>(responseHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
 
