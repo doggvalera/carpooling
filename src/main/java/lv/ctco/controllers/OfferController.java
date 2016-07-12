@@ -27,21 +27,28 @@ public class OfferController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOffers() {
-        offerRepository.findAll();
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Offer> offers = offerRepository.findAll();
+        return new ResponseEntity<>(offers, HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersById(@PathVariable("id") int id) {
-        offerRepository.findOne(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (offerRepository.exists(id)) {
+            offerRepository.findOne(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(path = "/bydriver/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersByDriverID(@PathVariable("id") int id) {
-        User user = userRepository.findOne(id);
-        List<Offer> offerList = offerRepository.getByDriverID(user);
-        return new ResponseEntity<>(offerList, HttpStatus.OK);
+        if (offerRepository.exists(id)) {
+            User user = userRepository.findOne(id);
+            List<Offer> offerList = offerRepository.getByDriverID(user);
+            return new ResponseEntity<>(offerList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
     }
 
     @Transactional
