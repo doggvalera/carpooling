@@ -53,5 +53,4 @@ public class OfferController {
         offerRepository.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
