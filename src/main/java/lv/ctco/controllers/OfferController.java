@@ -55,7 +55,7 @@ public class OfferController {
 
 
         User user = userRepository.findOne(id);
-        if (user.getId()==id) {
+        if (userRepository.exists(id)) {
             offer.setUser(user);
             offerRepository.save(offer);
 
@@ -64,8 +64,9 @@ public class OfferController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateOfferById(@PathVariable("id") int id, @RequestBody Offer offer) {
+    @Transactional
+    @RequestMapping(path = "/{id}/{uId}", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateOfferById(@PathVariable("id") int id, @PathVariable("id") int uId, @RequestBody Offer offer) {
         if (offerRepository.exists(id)) {
             Offer editedOffer = offerRepository.findOne(id);
             editedOffer.setCarDescription(offer.getCarDescription());
@@ -74,7 +75,8 @@ public class OfferController {
             editedOffer.setDelayTime(offer.getDelayTime());
             editedOffer.setPassengersAmount(offer.getPassengersAmount());
             editedOffer.setTime(offer.getTime());
-            editedOffer.setUser(offer.getUser());
+            User user = userRepository.findOne(uId);
+            editedOffer.setUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -67,4 +67,21 @@ public class OfferControllerTest {
 
         get(OFFER_PATH + "/bydriver/" + user.getId()).then().statusCode(NOT_FOUND);
     }
+
+    @Test
+    public void testPostNotFound() {
+        User user = new User();
+        user.setName("name");
+        user.setSurname("surname");
+        user.setPassword("password");
+        user.setEmail("mail");
+        user.setId(1);
+        Offer offer = new Offer();
+        offer.setUser(user);
+        offer.setPassengersAmount(3);
+
+
+        given().contentType(JSON).body(offer).when().post(OFFER_PATH + "/-1").then().statusCode(NOT_FOUND);
+    }
+
 }
