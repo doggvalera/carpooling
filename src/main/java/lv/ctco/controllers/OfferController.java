@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping(path = "/offer")
+@RequestMapping(path = "/offers")
 public class OfferController {
 
     @Autowired
@@ -27,15 +27,13 @@ public class OfferController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOffers() {
-        List<Offer> offers = offerRepository.findAll();
-        return new ResponseEntity<>(offers, HttpStatus.OK);
+        return new ResponseEntity<>(offerRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersById(@PathVariable("id") int id) {
         if (offerRepository.exists(id)) {
-            offerRepository.findOne(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(offerRepository.findOne(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -52,17 +50,16 @@ public class OfferController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
-        offerRepository.save(offer);
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
 
-        UriComponents uriComponents =
-                b.path("/offer" + "/{id}").buildAndExpand(offer.getId());
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(uriComponents.toUri());
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        User user = userRepository.findOne(id);
+        if (user.getId()==id) {
+            offer.setUser(user);
+            offerRepository.save(offer);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
