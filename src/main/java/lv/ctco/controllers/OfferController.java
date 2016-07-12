@@ -17,7 +17,7 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping(path = "/offer")
+@RequestMapping(path = "/offers")
 public class OfferController {
 
     @Autowired
@@ -27,15 +27,13 @@ public class OfferController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOffers() {
-        List<Offer> offers = offerRepository.findAll();
-        return new ResponseEntity<>(offers, HttpStatus.OK);
+        return new ResponseEntity<>(offerRepository.findAll(), HttpStatus.OK);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersById(@PathVariable("id") int id) {
         if (offerRepository.exists(id)) {
-            offerRepository.findOne(id);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>(offerRepository.findOne(id), HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
@@ -55,8 +53,8 @@ public class OfferController {
     @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
 
-        if (offerRepository.exists(id)) {
-            User user = userRepository.findOne(id);
+        User user = userRepository.findOne(id);
+        if (user.getId()==id) {
             offer.setUser(user);
             offerRepository.save(offer);
             return new ResponseEntity<>(HttpStatus.CREATED);
