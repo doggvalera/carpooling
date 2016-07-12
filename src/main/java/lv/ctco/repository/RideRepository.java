@@ -14,5 +14,4 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
     @Query("select r from Ride r join r.requestList q where q.user = ?1")
     List<Ride> getByPassenger(User driver);
-
 }
