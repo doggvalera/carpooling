@@ -17,6 +17,8 @@ public class DateTimeRange {
         return true;
     }
 
+
+
     public LocalDateTime getEarliestDeparture() {
         return earliestDeparture;
     }
