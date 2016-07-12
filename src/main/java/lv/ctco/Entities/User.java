@@ -13,17 +13,13 @@ public class User {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @NotEmpty
     @Column(name = "NAME")
     private String name;
     @Column(name = "EMAIL")
-    @NotEmpty
     private String email;
     @Column(name = "SURNAME")
-    @NotEmpty
     private String surname;
     @Column(name = "PASSWORD")
-    @NotEmpty
     private String password;
 
     public User() {

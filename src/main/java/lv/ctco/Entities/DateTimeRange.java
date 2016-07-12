@@ -25,6 +25,7 @@ public class DateTimeRange {
         this.earliestDeparture = earliestDeparture;
     }
 
+
     public LocalDateTime getLatestDeparture() {
         return latestDeparture;
     }

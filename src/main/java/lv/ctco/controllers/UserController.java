@@ -28,7 +28,6 @@ public class UserController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> userAdd(@RequestBody User user) {
-
         userRepository.save(user);
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }

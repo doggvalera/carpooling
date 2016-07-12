@@ -59,9 +59,8 @@ public class RequestController {
     @RequestMapping(path = "/{ID}", method = RequestMethod.POST)
     public ResponseEntity<?> requestPost(@PathVariable("ID") int id,@RequestBody Request request) {
         User user = userRepository.findOne(id);
-        Request req = request;
-        req.setUser(user);
-        requestRepository.save(req);
+        request.setUser(user);
+        requestRepository.save(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

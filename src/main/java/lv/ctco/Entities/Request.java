@@ -11,7 +11,7 @@ public class Request {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
     @Embedded
