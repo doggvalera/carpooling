@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import lv.ctco.entities.User;
+import lv.ctco.entities.UserCredentials;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -41,6 +43,17 @@ public class UserController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+    }
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<?> login(@RequestBody UserCredentials userCredentials) {
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        //userRepository.save(user);
+
+        
+        List<User> userByEmail = userRepository.findUserByEmail(userCredentials.getEmail(), userCredentials.getPassword());
+        return new ResponseEntity<>(userByEmail.size() != 0, HttpStatus.OK);
     }
 
 
