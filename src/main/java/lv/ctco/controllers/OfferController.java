@@ -52,17 +52,16 @@ public class OfferController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
-        offerRepository.save(offer);
+    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
+    public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
 
-        UriComponents uriComponents =
-                b.path("/offer" + "/{id}").buildAndExpand(offer.getId());
-
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(uriComponents.toUri());
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        if (offerRepository.exists(id)) {
+            User user = userRepository.findOne(id);
+            offer.setUser(user);
+            offerRepository.save(offer);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)

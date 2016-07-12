@@ -62,7 +62,7 @@ public class OfferControllerTest {
         Offer offer = new Offer();
         offer.setUser(user);
         offer.setPassengersAmount(3);
-        Headers header = given().contentType(JSON).body(offer).when().post("/offer").getHeaders();
+        Headers header = given().contentType(JSON).body(offer).when().post(OFFER_PATH).getHeaders();
         get(header.getValue("Location")).then().body("user", equalTo(user));
     }
 }
