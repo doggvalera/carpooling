@@ -40,7 +40,7 @@ public class OfferController {
 
     @RequestMapping(path = "/bydriver/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersByDriverID(@PathVariable("id") int id) {
-        if (offerRepository.exists(id)) {
+        if (userRepository.exists(id)) {
             User user = userRepository.findOne(id);
             List<Offer> offerList = offerRepository.getByDriverID(user);
             return new ResponseEntity<>(offerList, HttpStatus.OK);
