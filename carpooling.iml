@@ -92,5 +92,9 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-core:4.2.7.RELEASE" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:4.2.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: junit:junit:4.12" level="project" />
+    <orderEntry type="library" name="Maven: com.jayway.restassured:rest-assured:2.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jayway.restassured:json-path:2.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jayway.restassured:rest-assured-common:2.5.0" level="project" />
+    <orderEntry type="library" name="Maven: com.jayway.restassured:xml-path:2.5.0" level="project" />
   </component>
 </module>
