@@ -53,10 +53,12 @@ public class OfferController {
     @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
 
+
         User user = userRepository.findOne(id);
         if (user.getId()==id) {
             offer.setUser(user);
             offerRepository.save(offer);
+
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

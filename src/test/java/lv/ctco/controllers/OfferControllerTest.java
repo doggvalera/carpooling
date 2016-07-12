@@ -65,6 +65,6 @@ public class OfferControllerTest {
         offer.setUser(user);
         offer.setPassengersAmount(3);
 
-        get(OFFER_PATH + "/bydriver/" + user.getId()).then().statusCode(OK);
+        get(OFFER_PATH + "/bydriver/" + user.getId()).then().statusCode(NOT_FOUND);
     }
 }
