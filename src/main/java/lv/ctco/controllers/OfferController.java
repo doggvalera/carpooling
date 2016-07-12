@@ -40,7 +40,7 @@ public class OfferController {
 
     @RequestMapping(path = "/bydriver/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getOffersByDriverID(@PathVariable("id") int id) {
-        if (offerRepository.exists(id)) {
+        if (userRepository.exists(id)) {
             User user = userRepository.findOne(id);
             List<Offer> offerList = offerRepository.getByDriverID(user);
             return new ResponseEntity<>(offerList, HttpStatus.OK);
@@ -53,10 +53,12 @@ public class OfferController {
     @RequestMapping(path = "/{id}", method = RequestMethod.POST)
     public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
 
+
         User user = userRepository.findOne(id);
         if (user.getId()==id) {
             offer.setUser(user);
             offerRepository.save(offer);
+
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

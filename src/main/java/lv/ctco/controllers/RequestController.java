@@ -2,12 +2,17 @@ package lv.ctco.controllers;
 
 
 import lv.ctco.entities.Request;
+import lv.ctco.entities.User;
 import lv.ctco.repository.RequestRepository;
+import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "rides/requests")
@@ -15,6 +20,8 @@ public class RequestController {
 
     @Autowired
     RequestRepository requestRepository;
+    @Autowired
+    UserRepository userRepository;
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
@@ -33,9 +40,26 @@ public class RequestController {
         }
     }
 
+
     @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> studentsPost(@RequestBody Request request) {
+    @RequestMapping(path = "/bypassenger/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> requestByPassengerName(@PathVariable("passengerName") int id) {
+        if (userRepository.exists(id)) {
+            User user = userRepository.findOne(id);
+            List<Request> requestList = requestRepository.getRequestsByPassenger(user);
+            return new ResponseEntity<>(requestList, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(userRepository.findOne(id), HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+    @Transactional
+    @RequestMapping(path = "/{ID}", method = RequestMethod.POST)
+    public ResponseEntity<?> requestPost(@PathVariable("ID") int id,@RequestBody Request request) {
+        User user = userRepository.findOne(id);
+        request.setUser(user);
         requestRepository.save(request);
         return new ResponseEntity<>(HttpStatus.OK);
     }
