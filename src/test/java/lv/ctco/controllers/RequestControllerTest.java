@@ -48,7 +48,6 @@ public class RequestControllerTest {
         user.setSurname("TestSurname");
         Request request = new Request();
         request.setUser(user);
-
         Headers header = given().contentType("application/json").body(request).when().post("/rides/requests").getHeaders();
         get(header.getValue("Location")).then().body("name", equalTo("TestName"));
     }
