@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
 import lv.ctco.entities.Offer;
@@ -15,6 +16,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.get;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
@@ -27,7 +30,7 @@ public class OfferControllerTest {
     public static final int NOT_FOUND = HttpStatus.NOT_FOUND.value();
     public static final int CREATED = HttpStatus.CREATED.value();
     public static final String OFFER_PATH = "/offer";
-
+    public static final String JSON = "application/json";
     @Before
     public void before() {
         RestAssured.port = 8090;
@@ -58,5 +61,8 @@ public class OfferControllerTest {
         user.setPassword("password");
         Offer offer = new Offer();
         offer.setUser(user);
+        offer.setPassengersAmount(3);
+        Headers header = given().contentType(JSON).body(offer).when().post("/offer").getHeaders();
+        get(header.getValue("Location")).then().body("user", equalTo(user));
     }
 }
