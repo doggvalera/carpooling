@@ -1,8 +1,16 @@
 package lv.ctco.controllers;
 
 import io.restassured.RestAssured;
+<<<<<<< HEAD
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
+=======
+import io.restassured.http.Headers;
+import io.restassured.parsing.Parser;
+import lv.ctco.CarPoolingApplication;
+import lv.ctco.entities.Coordinate;
+import lv.ctco.entities.DateTimeRange;
+>>>>>>> refs/remotes/origin/master
 import lv.ctco.entities.Request;
 import lv.ctco.entities.User;
 import org.junit.Before;
@@ -14,7 +22,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+<<<<<<< HEAD
 import static io.restassured.RestAssured.*;
+=======
+import java.time.*;
+
+import static io.restassured.RestAssured.*;
+import static org.hamcrest.Matchers.equalTo;
+>>>>>>> refs/remotes/origin/master
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)

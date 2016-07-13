@@ -1,6 +1,7 @@
 package lv.ctco.repository;
 
 import lv.ctco.entities.Request;
+import lv.ctco.entities.Ride;
 import lv.ctco.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

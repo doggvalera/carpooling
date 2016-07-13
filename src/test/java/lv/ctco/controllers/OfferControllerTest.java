@@ -1,6 +1,10 @@
 package lv.ctco.controllers;
 
 import io.restassured.RestAssured;
+<<<<<<< HEAD
+=======
+import io.restassured.http.Headers;
+>>>>>>> refs/remotes/origin/master
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
 import lv.ctco.entities.Offer;
@@ -16,6 +20,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+<<<<<<< HEAD
+=======
+import static org.hamcrest.Matchers.equalTo;
+>>>>>>> refs/remotes/origin/master
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
