@@ -62,7 +62,19 @@
             <artifactId>rest-assured</artifactId>
             <version>2.5.0</version>
         </dependency>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6038eb7dd5bd05fc6569ac905d7f0519a5420112
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6038eb7dd5bd05fc6569ac905d7f0519a5420112
 
     </dependencies>
 

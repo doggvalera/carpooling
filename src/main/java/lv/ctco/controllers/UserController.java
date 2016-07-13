@@ -40,6 +40,19 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
+    @Transactional
+    @RequestMapping(path = "/withoutinput", method = RequestMethod.POST)
+    public ResponseEntity<?> userAddWithoutParams(@RequestBody User user, UriComponentsBuilder b) {
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+
+        UriComponents uriComponents =
+                b.path("/users" + "/{id}").buildAndExpand(user.getId());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(uriComponents.toUri());
+        return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+    }
+
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> userAdd(@RequestParam String name,
                                      String surname,
