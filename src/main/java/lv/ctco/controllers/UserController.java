@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -38,8 +39,8 @@ public class UserController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> userAdd(@RequestBody User user, UriComponentsBuilder b) {
+    @RequestMapping(path = "/withoutinput", method = RequestMethod.POST)
+    public ResponseEntity<?> userAddWithoutParams(@RequestBody User user, UriComponentsBuilder b) {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
@@ -50,17 +51,20 @@ public class UserController {
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 
-//    @Transactional
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<?> login(@RequestBody UserCredentials userCredentials) {
-//        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        //userRepository.save(user);
-//
-//
-//        List<User> userByEmail = userRepository.findUserByEmail(userCredentials.getEmail(), userCredentials.getPassword());
-//        return new ResponseEntity<>(userByEmail.size() != 0, HttpStatus.OK);
-//    }
-
-
-
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    public ResponseEntity<?> userAdd(@RequestParam String name,
+                                     String surname,
+                                     String email,
+                                     String password) {
+        if (userRepository.findUserByEmail(email) == null) {
+            User user = new User();
+            user.setName(name);
+            user.setSurname(surname);
+            user.setEmail(email);
+            user.setPassword(password);
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>("User with this email already exists", HttpStatus.BAD_REQUEST);
+    }
 }
