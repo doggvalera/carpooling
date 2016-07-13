@@ -60,7 +60,6 @@ public class RequestController {
 
 
     @Transactional
-<<<<<<< HEAD
     @RequestMapping(path = "/users/{userId2}/requests", method = RequestMethod.POST)
     public ResponseEntity<?> postRequestForUser(@PathVariable("userId2") int userId, @RequestBody Request request,
                                                      UriComponentsBuilder b) {
