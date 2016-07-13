@@ -12,20 +12,11 @@
     <meta charset="UTF-8">
     <title></title>
     <script type="text/javascript">
-        $('form[name=signupform]').submit(function(){
-
-            // Maybe show a loading indicator...
-
-            $.post($(this).attr('action'), $(this).serialize(), function(res){
-                // Do something with the response `res`
-                window.location="http://localhost:8080/index.html"
-                // Don't forget to hide the loading indicator!
-            });
-
-            return false; // prevent default action
-
-        });
+        function Redirect() {
+            window.location="http://localhost:8080";
+        }
     </script>
+
 </head>
 <body>
 <div class="container">
@@ -68,7 +59,8 @@
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="Register" class="btn btn-info btn-block">
+                        <input type="submit" value="Register" class="btn btn-success btn-block"/>
+                        <input type="button" value="Back" class="btn btn-warning btn-block" onclick="Redirect();" />
                     </form>
                 </div>
             </div>
