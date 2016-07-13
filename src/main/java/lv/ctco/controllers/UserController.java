@@ -40,21 +40,21 @@ public class UserController {
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<?> userAdd(@RequestBody User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> login(@RequestBody UserCredentials userCredentials) {
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        //userRepository.save(user);
-
-        
-        List<User> userByEmail = userRepository.findUserByEmail(userCredentials.getEmail(), userCredentials.getPassword());
-        return new ResponseEntity<>(userByEmail.size() != 0, HttpStatus.OK);
-    }
+//    @Transactional
+//    @RequestMapping(method = RequestMethod.POST)
+//    public ResponseEntity<?> login(@RequestBody UserCredentials userCredentials) {
+//        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        //userRepository.save(user);
+//
+//
+//        List<User> userByEmail = userRepository.findUserByEmail(userCredentials.getEmail(), userCredentials.getPassword());
+//        return new ResponseEntity<>(userByEmail.size() != 0, HttpStatus.OK);
+//    }
 
 
 
