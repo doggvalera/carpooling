@@ -46,38 +46,33 @@ public class RequestControllerTest {
         user.setSurname("The first");
         user.setEmail("john@john.com");
         user.setPassword("1234");
+        user.setId(10000);
 
+        Request request = new Request();
+        request.setUser(user);
+
+        given().
+                body(request).
+                        when().contentType("application/json").post("/request/users/1/requests").then().statusCode(201);
+
+        /*
         Headers header = given().contentType("application/json").body(user).when().post("/users").getHeaders();
 
         Request request = new Request();
 
         given().contentType("application/json")
                 .body(request).when()
-                .post(header.getValue("Location") + "/requests/").then()
+                .post(header.getValue("Location") + "r/requests/").then()
                 .statusCode(CREATED);
-
+*/
     }
 
     @Test
     public void getAllRequestsTestOk() {
-        get("/requests").then().statusCode(200);
+        get("request/requests").then().statusCode(200);
     }
 
-    @Test
-    public void testRequestsFindAll() throws Exception {
-        User user = new User();
-        user.setName("TestName");
-        user.setSurname("TestSurname");
-        Request request = new Request();
-        request.setUser(user);
-        Headers header = given().contentType("application/json")
-                .body(request)
-                .when()
-                .post("/rides/requests")
-                .getHeaders();
-        get(header.getValue("Location"))
-                .then()
-                .body("name", equalTo("TestName"));
-    }
+
+
 
 }
