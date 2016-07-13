@@ -17,7 +17,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
