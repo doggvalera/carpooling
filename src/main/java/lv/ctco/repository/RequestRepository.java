@@ -10,7 +10,6 @@ import java.util.List;
 
 public interface RequestRepository extends JpaRepository<Request, Integer> {
     @Query("select r from Request r where r.user = ?1")
-    List<Request> getRequestsByPassenger(User user);
-
+    List <Request> selectRequestsByPassenger(User user);
 
 }

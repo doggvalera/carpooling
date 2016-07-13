@@ -36,8 +36,27 @@ public class RequestControllerTest {
     }
 
     @Test
-    public void testGetNotFound() {
-        get("/something").then().statusCode(NOT_FOUND);
+    public void postRequestTest() {
+        User user = new User();
+        user.setName("John");
+        user.setSurname("The first");
+        user.setEmail("john@john.com");
+        user.setPassword("1234");
+
+        Headers header = given().contentType("application/json").body(user).when().post("/users").getHeaders();
+
+        Request request = new Request();
+
+        given().contentType("application/json")
+                .body(request).when()
+                .post(header.getValue("Location") + "/requests/").then()
+                .statusCode(CREATED);
+
+    }
+
+    @Test
+    public void getAllRequestsTestOk() {
+        get("/requests").then().statusCode(200);
     }
 
     @Test

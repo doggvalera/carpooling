@@ -39,10 +39,15 @@ public class UserController {
 
     @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> userAdd(@RequestBody User user) {
+    public ResponseEntity<?> userAdd(@RequestBody User user, UriComponentsBuilder b) {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+
+        UriComponents uriComponents =
+                b.path("/users" + "/{id}").buildAndExpand(user.getId());
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.setLocation(uriComponents.toUri());
+        return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 
 //    @Transactional
