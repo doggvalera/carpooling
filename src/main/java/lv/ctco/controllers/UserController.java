@@ -38,14 +38,6 @@ public class UserController {
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @Transactional
-    @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> userAddREST(@RequestBody User user) {
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
-    }
-
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> userAdd(@RequestParam String name,
                                      String surname,
@@ -61,20 +53,5 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User with this email already exists", HttpStatus.BAD_REQUEST);
-
     }
-
-
-//    @Transactional
-//    @RequestMapping(method = RequestMethod.POST)
-//    public ResponseEntity<?> login(@RequestBody UserCredentials userCredentials) {
-//        //user.setPassword(passwordEncoder.encode(user.getPassword()));
-//        //userRepository.save(user);
-//
-//
-//        List<User> userByEmail = userRepository.findUserByEmail(userCredentials.getEmail(), userCredentials.getPassword());
-//        return new ResponseEntity<>(userByEmail.size() != 0, HttpStatus.OK);
-//    }
-
-
 }
