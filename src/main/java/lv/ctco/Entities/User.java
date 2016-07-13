@@ -1,9 +1,12 @@
 package lv.ctco.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -21,6 +24,20 @@ public class User {
     private String surname;
     @Column(name = "PASSWORD", nullable = false)
     private String password;
+    @JsonManagedReference
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    private List<UserRoles> userRoles = new ArrayList<>();
+
+    public List<UserRoles> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRoles> userRoles) {
+            if (userRoles == null) return;
+            this.userRoles.clear();
+            this.userRoles.addAll(userRoles);
+            userRoles.forEach(u -> u.setUser(this));
+    }
 
     public User() {
     }

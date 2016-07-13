@@ -2,6 +2,7 @@ package lv.ctco.controllers;
 
 import lv.ctco.entities.User;
 import lv.ctco.entities.UserCredentials;
+import lv.ctco.entities.UserRoles;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -27,8 +29,8 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
 
 
     @Transactional
@@ -53,5 +55,17 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
         return new ResponseEntity<>("User with this email already exists", HttpStatus.BAD_REQUEST);
+    }
+
+    @RequestMapping(path = "/api/reg",method = RequestMethod.POST)
+    public ResponseEntity<?> userAdd(@RequestBody  User user) {
+        if (userRepository.findUserByEmail(user.getEmail()) == null) {
+            UserRoles userRoles = new UserRoles();
+            userRoles.setRole("USER");
+            user.setUserRoles(Arrays.asList(userRoles));
+            userRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }
