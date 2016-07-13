@@ -57,7 +57,7 @@ public class RequestController {
 
     @Transactional
     @RequestMapping(path = "/{ID}", method = RequestMethod.POST)
-    public ResponseEntity<?> requestPost(@PathVariable("ID") int id,@RequestBody Request request) {
+    public ResponseEntity<?> requestAdd(@PathVariable("ID") int id,@RequestBody Request request) {
         User user = userRepository.findOne(id);
         request.setUser(user);
         requestRepository.save(request);
@@ -66,7 +66,7 @@ public class RequestController {
 
     @Transactional
     @RequestMapping(path = "/{ID}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> studentDeleteById(@PathVariable("ID") int id) {
+    public ResponseEntity<?> requestDeleteById(@PathVariable("ID") int id) {
         if (requestRepository.exists(id)) {
             requestRepository.delete(id);
             return new ResponseEntity<>(requestRepository.findAll(), HttpStatus.OK);

@@ -4,6 +4,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
+import lv.ctco.entities.Coordinate;
+import lv.ctco.entities.DateTimeRange;
 import lv.ctco.entities.Request;
 import lv.ctco.entities.User;
 import org.junit.Before;
@@ -14,6 +16,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+
+import java.time.*;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
@@ -42,13 +46,19 @@ public class RequestControllerTest {
 
     @Test
     public void testRequestsFindAll() throws Exception {
-
         User user = new User();
         user.setName("TestName");
         user.setSurname("TestSurname");
         Request request = new Request();
         request.setUser(user);
-        Headers header = given().contentType("application/json").body(request).when().post("/rides/requests").getHeaders();
-        get(header.getValue("Location")).then().body("name", equalTo("TestName"));
+        Headers header = given().contentType("application/json")
+                .body(request)
+                .when()
+                .post("/rides/requests")
+                .getHeaders();
+        get(header.getValue("Location"))
+                .then()
+                .body("name", equalTo("TestName"));
     }
+
 }
