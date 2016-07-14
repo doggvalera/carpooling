@@ -52,41 +52,6 @@ public class OfferController {
 
     }
 
-    @Transactional
-    @RequestMapping(path = "/{uid}", method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@PathVariable("uid") int id, @RequestBody Offer offer, UriComponentsBuilder b) {
-
-
-        User user = userRepository.findOne(id);
-        if (userRepository.exists(id)) {
-            offer.setUser(user);
-            offerRepository.save(offer);
-
-            HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, OFFER_PATH + "/{id}", offer.getId());
-
-            return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @Transactional
-    @RequestMapping(path = "/{id}/{uId}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateOfferById(@PathVariable("id") int id, @PathVariable("id") int uId, @RequestBody Offer offer) {
-        if (offerRepository.exists(id)) {
-            Offer editedOffer = offerRepository.findOne(id);
-            editedOffer.setCarDescription(offer.getCarDescription());
-            editedOffer.setCoordinate(offer.getCoordinate());
-            editedOffer.setDate(offer.getDate());
-            editedOffer.setDelayTime(offer.getDelayTime());
-            editedOffer.setPassengersAmount(offer.getPassengersAmount());
-            editedOffer.setTime(offer.getTime());
-            User user = userRepository.findOne(uId);
-            editedOffer.setUser(user);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteOfferById(@PathVariable("id") int id) {
         offerRepository.delete(id);

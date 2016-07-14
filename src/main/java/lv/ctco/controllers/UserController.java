@@ -1,5 +1,6 @@
 package lv.ctco.controllers;
 
+import lv.ctco.HeaderBuilder;
 import lv.ctco.entities.User;
 import lv.ctco.entities.UserCredentials;
 import lv.ctco.entities.UserRoles;
@@ -43,15 +44,12 @@ public class UserController {
     }
 
     @Transactional
-    @RequestMapping(path = "/withoutinput", method = RequestMethod.POST)
+    @RequestMapping(path = WITHOUT_INPUT_PATH, method = RequestMethod.POST)
     public ResponseEntity<?> userAddWithoutParams(@RequestBody User user, UriComponentsBuilder b) {
 //        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
 
-        UriComponents uriComponents =
-                b.path(USER_PATH + "/{id}").buildAndExpand(user.getId());
-        HttpHeaders responseHeaders = new HttpHeaders();
-        responseHeaders.setLocation(uriComponents.toUri());
+        HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, USER_PATH + "/{id}", user.getId());
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
     }
 

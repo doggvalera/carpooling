@@ -16,4 +16,5 @@ public class Consts {
     public static final String RIDE_PATH = "/rides";
     public static final String BY_DRIVER_PATH = "/bydriver";
     public static final String BY_PASSANGER_PATH = "/bypassanger";
+    public static final String WITHOUT_INPUT_PATH = "/withoutinput";
 }
