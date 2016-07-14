@@ -2,10 +2,8 @@ package lv.ctco.controllers;
 
 import lv.ctco.HeaderBuilder;
 import lv.ctco.LoginContext;
-import lv.ctco.entities.Coordinate;
-import lv.ctco.entities.DateTimeRange;
-import lv.ctco.entities.Offer;
-import lv.ctco.entities.User;
+import lv.ctco.entities.*;
+
 import lv.ctco.repository.OfferRepository;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import static lv.ctco.Consts.*;
 
@@ -136,6 +135,17 @@ public class OfferByUserController {
             User user = userRepository.findOne(uId);
             editedOffer.setUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getOffersByUserId(@PathVariable("uid") int id) {
+        if (userRepository.exists(id)) {
+            User user = userRepository.findOne(id);
+            List<Offer> offerList = offerRepository.getByDriver(user);
+            return new ResponseEntity<>(offerList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Integer> {
     @Query("select o from Offer o where o.user = ?1")
-    List<Offer> getByDriverID(User driver);
+    List<Offer> getByDriver(User driver);
 }

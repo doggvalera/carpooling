@@ -50,7 +50,7 @@ public class OfferController {
     public ResponseEntity<?> getOffersForUser() {
         User user = loginContext.getCurrentUser();
         if (user != null) {
-            List<Offer> offerList = offerRepository.getByDriverID(user);
+            List<Offer> offerList = offerRepository.getByDriver(user);
             return new ResponseEntity<>(offerList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
