@@ -42,6 +42,7 @@ public class OfferByUserControllerTest {
     @Test
     public void testPostOfferOK() throws Exception {
         User user = StandartBuilder.buildUser();
+        user.setEmail("email1");
 
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
@@ -55,6 +56,7 @@ public class OfferByUserControllerTest {
     @Test
     public void testUpdateOfferByIdOK() throws Exception {
         User user = StandartBuilder.buildUser();
+        user.setEmail("email2");
 
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
@@ -73,6 +75,7 @@ public class OfferByUserControllerTest {
     @Test
     public void testUpdateOfferByIdFailed() throws Exception {
         User user = StandartBuilder.buildUser();
+        user.setEmail("email3");
 
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
@@ -87,6 +90,6 @@ public class OfferByUserControllerTest {
         offer.setPassengersAmount(5);
 
         given().contentType(JSON).body(offer2).when().put(USER_PATH + BAD_ID + OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
-        given().contentType(JSON).body(offer2).when().put(headersOffer.getValue("Location") + BAD_ID).then().statusCode(NOT_FOUND);
+        given().contentType(JSON).body(offer2).when().put(headersUser.getValue("Location") + OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 }
