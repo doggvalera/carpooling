@@ -59,6 +59,7 @@ public class RequestByUserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> postRequestForUser(@PathVariable("uid") String userId2, @RequestParam String earliestDeparture,
                                                 String latestDeparture,
