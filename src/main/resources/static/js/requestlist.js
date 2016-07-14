@@ -1,5 +1,5 @@
 function loadRequests() {
-    return fetch('http://localhost:8080/users/1/requests')
+    return fetch('http://localhost:8080/users/requests')
         .then(function(response) {
             return response.json();
         });
@@ -28,7 +28,7 @@ function drawRequestList() {
 function handleSubmit(event){
 
     var form = new FormData(document.request);
-    fetch('http://localhost:8080/users/1/requests', {
+    fetch('http://localhost:8080/users/requests', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

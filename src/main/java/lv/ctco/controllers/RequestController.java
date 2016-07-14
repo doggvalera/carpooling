@@ -41,16 +41,7 @@ public class RequestController {
         return new ResponseEntity<>(requestRepository.findAll(), HttpStatus.OK);
     }
 
-    @Transactional
-    @RequestMapping(path = USER_PATH, method = RequestMethod.GET)
-    public ResponseEntity<?> getRequestsForUser() {
-        User user = loginContext.getCurrentUser();
-        if (user != null) {
-            List<Request> requestList = requestRepository.selectRequestsByPassenger(user);
-            return new ResponseEntity<>(requestList, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
+
 
     @Transactional
     @RequestMapping(path = "/{requestId}", method = RequestMethod.GET)

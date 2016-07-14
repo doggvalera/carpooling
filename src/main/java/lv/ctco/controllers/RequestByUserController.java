@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import lv.ctco.HeaderBuilder;
+import lv.ctco.LoginContext;
 import lv.ctco.entities.Coordinate;
 import lv.ctco.entities.DateTimeRange;
 import lv.ctco.entities.Request;
@@ -32,6 +33,8 @@ public class RequestByUserController {
     RequestRepository requestRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
@@ -55,6 +58,17 @@ public class RequestByUserController {
 
             HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, REQUEST_PATH + "/{id}", request.getId());
             return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getRequestsForUser() {
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
+            List<Request> requestList = requestRepository.selectRequestsByPassenger(user);
+            return new ResponseEntity<>(requestList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

@@ -33,6 +33,16 @@ public class OfferByUserController {
     @Autowired
     LoginContext loginContext;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getOffersForUser() {
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
+            List<Offer> offerList = offerRepository.getByDriver(user);
+            return new ResponseEntity<>(offerList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    }
 
     @Transactional
     @RequestMapping(path = "", method = RequestMethod.POST)
@@ -139,14 +149,4 @@ public class OfferByUserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @Transactional
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getOffersByUserId(@PathVariable("uid") int id) {
-        if (userRepository.exists(id)) {
-            User user = userRepository.findOne(id);
-            List<Offer> offerList = offerRepository.getByDriver(user);
-            return new ResponseEntity<>(offerList, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
 }

@@ -1,5 +1,5 @@
 function loadOffers() {
-    return fetch('http://localhost:8080/users/1/offers')
+    return fetch('http://localhost:8080/users/offers')
         .then(function(response) {
             return response.json();
         });
@@ -28,7 +28,7 @@ function drawOfferList() {
 function handleSubmit(event){
 
     var form = new FormData(document.offer);
-    fetch('http://localhost:8080/users/1/offers', {
+    fetch('http://localhost:8080/users/offers', {
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

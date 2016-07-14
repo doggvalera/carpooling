@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import lv.ctco.HeaderBuilder;
+import lv.ctco.LoginContext;
 import lv.ctco.entities.User;
 import lv.ctco.entities.UserCredentials;
 import lv.ctco.entities.UserRoles;
@@ -33,9 +34,21 @@ public class UserController {
 
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 //    @Autowired
 //    private PasswordEncoder passwordEncoder;
 
+
+    @Transactional
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<?> getCurrentUser() {
+        User user = loginContext.getCurrentUser();
+        if (user != null)
+            return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
