@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 
+import static lv.ctco.Consts.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
@@ -26,18 +27,11 @@ import static io.restassured.RestAssured.given;
 
 public class OfferControllerTest {
 
-    public static final int OK = HttpStatus.OK.value();
-    public static final int NOT_FOUND = HttpStatus.NOT_FOUND.value();
-    public static final int CREATED = HttpStatus.CREATED.value();
-    public static final String OFFER_PATH = "/offers";
-    public static final String JSON = "application/json";
-
     @Before
     public void before() {
         RestAssured.port = 8090;
         RestAssured.defaultParser = Parser.JSON;
     }
-
 
     @Test
     public void testGetNotFound() {
@@ -49,9 +43,28 @@ public class OfferControllerTest {
         get(OFFER_PATH).then().statusCode(OK);
     }
 
+//    @Test
+//    public void testGetOneOK() {
+//        User user = new User();
+//        user.setName("name");
+//        user.setSurname("surname");
+//        user.setPassword("password");
+//        user.setEmail("mail");
+//
+//        Headers headersU = given().contentType(JSON).body(user).when().post(USER_PATH).getHeaders();
+//
+//        Offer offer = new Offer();
+//        offer.setUser(user);
+//        offer.setPassengersAmount(3);
+//
+//        Headers headerO = given().contentType(JSON).body(offer).when().post(OFFER_PATH + "/" + user.getId()).getHeaders();
+//
+//        get(headerO.getValue("Location")).then().statusCode(OK);
+//    }
+
     @Test
     public void testGetOneNotFount() {
-        get(OFFER_PATH + "/-1").then().statusCode(NOT_FOUND);
+        get(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 
     @Test
@@ -65,7 +78,7 @@ public class OfferControllerTest {
         offer.setUser(user);
         offer.setPassengersAmount(3);
 
-        get(OFFER_PATH + "/bydriver/" + user.getId()).then().statusCode(NOT_FOUND);
+        get(OFFER_PATH + BY_DRIVER_PATH + user.getId()).then().statusCode(NOT_FOUND);
     }
 
     @Test
@@ -81,7 +94,7 @@ public class OfferControllerTest {
         offer.setPassengersAmount(3);
 
 
-        given().contentType(JSON).body(offer).when().post(OFFER_PATH + "/-1").then().statusCode(NOT_FOUND);
+        given().contentType(JSON).body(offer).when().post(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 
 }

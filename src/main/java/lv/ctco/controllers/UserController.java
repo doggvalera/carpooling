@@ -23,8 +23,10 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static lv.ctco.Consts.*;
+
 @RestController
-@RequestMapping("/users")
+@RequestMapping(USER_PATH)
 public class UserController {
 
     @Autowired
@@ -47,7 +49,7 @@ public class UserController {
         userRepository.save(user);
 
         UriComponents uriComponents =
-                b.path("/users" + "/{id}").buildAndExpand(user.getId());
+                b.path(USER_PATH + "/{id}").buildAndExpand(user.getId());
         HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.setLocation(uriComponents.toUri());
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
