@@ -2,6 +2,7 @@ package lv.ctco.controllers;
 
 import com.jayway.restassured.internal.http.HTTPBuilder;
 import lv.ctco.HeaderBuilder;
+import lv.ctco.LoginContext;
 import lv.ctco.entities.*;
 import lv.ctco.repository.OfferRepository;
 import lv.ctco.repository.UserRepository;
@@ -28,6 +29,8 @@ public class OfferController {
     OfferRepository offerRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOffers() {
@@ -42,10 +45,10 @@ public class OfferController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(path = "/users/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getOffersByDriverID(@PathVariable("id") int id) {
-        if (userRepository.exists(id)) {
-            User user = userRepository.findOne(id);
+    @RequestMapping(path = "/bydriver", method = RequestMethod.GET)
+    public ResponseEntity<?> getOffersByDriverID() {
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
             List<Offer> offerList = offerRepository.getByDriverID(user);
             return new ResponseEntity<>(offerList, HttpStatus.OK);
         }

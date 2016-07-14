@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import lv.ctco.HeaderBuilder;
+import lv.ctco.LoginContext;
 import lv.ctco.entities.Coordinate;
 import lv.ctco.entities.DateTimeRange;
 import lv.ctco.entities.Offer;
@@ -22,20 +23,22 @@ import java.time.format.DateTimeFormatter;
 import static lv.ctco.Consts.*;
 
 @RestController
-@RequestMapping(path = USER_PATH + "/{uid}" + OFFER_PATH)
+@RequestMapping(path = USER_PATH + OFFER_PATH)
 public class OfferByUserController {
 
     @Autowired
     OfferRepository offerRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 
     @Transactional
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@PathVariable("uid") int id, @RequestBody Offer offer, UriComponentsBuilder b) {
+    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
 
-        User user = userRepository.findOne(id);
-        if (userRepository.exists(id)) {
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
             offer.setUser(user);
             offerRepository.save(offer);
 
