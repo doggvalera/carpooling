@@ -23,7 +23,7 @@ import java.util.List;
 import static lv.ctco.Consts.*;
 
 @RestController
-@RequestMapping(path = USER_PATH  + OFFER_PATH)
+@RequestMapping(path = USER_PATH + OFFER_PATH)
 public class OfferByUserController {
 
     @Autowired
@@ -81,7 +81,7 @@ public class OfferByUserController {
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<?> postOfferForUser(@PathVariable("uid") String userId2, @RequestParam String earliestDeparture,
+    public ResponseEntity<?> postOfferForUser(@RequestParam String earliestDeparture,
                                               String latestDeparture,
                                               String latitudeFrom,
                                               String longitudeFrom,
@@ -89,9 +89,8 @@ public class OfferByUserController {
                                               String longitudeTo,
                                               String car,
                                               UriComponentsBuilder b) {
-        int userId = Integer.parseInt(userId2);
-        if (userRepository.exists(userId)) {
-            User user = userRepository.findOne(userId);
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
             Offer offer = new Offer();
             offer.setUser(user);
 
@@ -132,7 +131,7 @@ public class OfferByUserController {
 
     @Transactional
     @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> updateOfferById(@PathVariable("id") int id, @PathVariable("uid") int uId, @RequestBody Offer offer) {
+    public ResponseEntity<?> updateOfferById(@PathVariable("id") int id, @RequestBody Offer offer) {
         if (offerRepository.exists(id)) {
             Offer editedOffer = offerRepository.findOne(id);
             editedOffer.setCarDescription(offer.getCarDescription());
@@ -142,7 +141,7 @@ public class OfferByUserController {
             editedOffer.setDelayTime(offer.getDelayTime());
             editedOffer.setPassengersAmount(offer.getPassengersAmount());
             editedOffer.setTime(offer.getTime());
-            User user = userRepository.findOne(uId);
+            User user = loginContext.getCurrentUser();
             editedOffer.setUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }

@@ -26,7 +26,7 @@ import static lv.ctco.Consts.REQUEST_PATH;
 import static lv.ctco.Consts.USER_PATH;
 
 @RestController
-@RequestMapping(USER_PATH + "/{uid}" + REQUEST_PATH)
+@RequestMapping(USER_PATH + REQUEST_PATH)
 public class RequestByUserController {
 
     @Autowired
@@ -37,22 +37,11 @@ public class RequestByUserController {
     LoginContext loginContext;
 
     @Transactional
-    @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> getRequestsByUserId(@PathVariable("uid") int id) {
-        if (userRepository.exists(id)) {
-            User user = userRepository.findOne(id);
-            List<Request> requestList = requestRepository.selectRequestsByPassenger(user);
-            return new ResponseEntity<>(requestList, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
-    @Transactional
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<?> postRequestForUser(@PathVariable("uid") int userId, @RequestBody Request request,
+    public ResponseEntity<?> postRequestForUser(@RequestBody Request request,
                                                 UriComponentsBuilder b) {
-        if (userRepository.exists(userId)) {
-            User user = userRepository.findOne(userId);
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
             request.setUser(user);
             requestRepository.save(request);
 
@@ -75,7 +64,7 @@ public class RequestByUserController {
 
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
-    public ResponseEntity<?> postRequestForUser(@PathVariable("uid") String userId2, @RequestParam String earliestDeparture,
+    public ResponseEntity<?> postRequestForUser(@RequestParam String earliestDeparture,
                                                 String latestDeparture,
                                                 String latitudeFrom,
                                                 String longitudeFrom,
@@ -83,9 +72,8 @@ public class RequestByUserController {
                                                 String longitudeTo,
                                                 String radius,
                                                 UriComponentsBuilder b) {
-        int userId = Integer.parseInt(userId2);
-        if (userRepository.exists(userId)) {
-            User user = userRepository.findOne(userId);
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
             Request request = new Request();
             request.setUser(user);
 

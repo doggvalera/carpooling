@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @Transactional
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(path = "/all", method = RequestMethod.GET)
     public ResponseEntity<?> userFindAll() {
         userRepository.findAll();
         return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
