@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>User's requests</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="js/handlebars.js"></script>
+    <script src="js/requestlist.js"></script>
+</head>
+
+<body>
+
+</body>
+
+    <script id="request-list" type="text/x-handlebars-template">
+        <div class="request-list">
+            <h1>Request list</h1>
+            <div>
+                {{{body}}}
+            </div>
+        </div>
+    </script>
+
+    <script id="request" type="text/x-handlebars-template">
+        <div class="request">
+            <table>
+
+                <tr>
+                    <td>{{id}} </td>
+                    <td>{{radius}} </td>
+
+
+                    <td> <button onclick="removeElement(event, {{id}})">x</button> </td>
+                </tr>
+
+            </table>
+
+
+        </div>
+    </script>
+
+    </html>
+
+        <form name="request" onsubmit="handleSubmit(event)">
+
+            <div class="container">
+                <div class="row centered-form">
+                    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">New Drive Request</h3>
+                            </div>
+                            <div class="panel-body">
+                                <form role="form">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="earliestDeparture" id="earliestDeparture" class="form-control input-sm" placeholder="Earliest departure time">
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="latestDeparture" id="latestDeparture" class="form-control input-sm" placeholder="Latest departure time">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="latitudeFrom" id="latitudeFrom" class="form-control input-sm" placeholder="From (latitude)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="longitudeFrom" id="longitudeFrom" class="form-control input-sm" placeholder="From (longitude)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="latitudeTo" id="latitudeTo" class="form-control input-sm" placeholder="To (latitude)">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-6 col-sm-3 col-md-3">
+                                            <div class="form-group">
+                                                <input type="text" name="longitudeTo" id="longitudeTo" class="form-control input-sm" placeholder="To (longitude)">
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xs-6 col-sm-6 col-md-6">
+                                            <div class="form-group">
+                                                <input type="text" name="radius" id="radius" class="form-control input-sm" placeholder="Radius">
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <input type="submit" value="Add request" class="btn btn-info btn-block">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+    </form>
