@@ -46,7 +46,8 @@ public class OfferByUserController {
         if (offerRepository.exists(id)) {
             Offer editedOffer = offerRepository.findOne(id);
             editedOffer.setCarDescription(offer.getCarDescription());
-            editedOffer.setCoordinate(offer.getCoordinate());
+            editedOffer.setCoordinateTo(offer.getCoordinateTo());
+            editedOffer.setCoordinateFrom(offer.getCoordinateFrom());
             editedOffer.setDate(offer.getDate());
             editedOffer.setDelayTime(offer.getDelayTime());
             editedOffer.setPassengersAmount(offer.getPassengersAmount());
