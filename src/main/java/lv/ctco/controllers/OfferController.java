@@ -1,5 +1,7 @@
 package lv.ctco.controllers;
 
+import com.jayway.restassured.internal.http.HTTPBuilder;
+import lv.ctco.HeaderBuilder;
 import lv.ctco.entities.Offer;
 import lv.ctco.entities.User;
 import lv.ctco.repository.OfferRepository;
@@ -15,9 +17,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 
-@RestController
+import static lv.ctco.Consts.*;
 
-@RequestMapping(path = "/offers")
+@RestController
+@RequestMapping(path = OFFER_PATH)
 public class OfferController {
 
     @Autowired
@@ -31,7 +34,7 @@ public class OfferController {
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<?> getOffersById(@PathVariable("id") int id) {
+    public ResponseEntity<?> getOfferById(@PathVariable("id") int id) {
         if (offerRepository.exists(id)) {
             return new ResponseEntity<>(offerRepository.findOne(id), HttpStatus.OK);
         }
@@ -50,16 +53,18 @@ public class OfferController {
     }
 
     @Transactional
-    @RequestMapping(path = "/{id}", method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@PathVariable("id") int id, @RequestBody Offer offer) {
-
+    @RequestMapping(path = "/{uid}", method = RequestMethod.POST)
+    public ResponseEntity<?> postOffer(@PathVariable("uid") int id, @RequestBody Offer offer, UriComponentsBuilder b) {
 
         User user = userRepository.findOne(id);
         if (userRepository.exists(id)) {
             offer.setUser(user);
             offerRepository.save(offer);
 
-            return new ResponseEntity<>(HttpStatus.CREATED);
+            HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, OFFER_PATH + "/{id}", offer.getId());
+
+            return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
+
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

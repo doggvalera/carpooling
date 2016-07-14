@@ -49,6 +49,7 @@ public class RequestController {
 
     @Transactional
     @RequestMapping(path = "/users/{userId2}", method = RequestMethod.GET)
+
     public ResponseEntity<?> getRequestsByUserId(@PathVariable("userId2") int id) {
         if (userRepository.exists(id)) {
             User user = userRepository.findOne(id);
@@ -113,6 +114,7 @@ public class RequestController {
             Request request = new Request();
             request.setUser(user);
 
+
             Coordinate coordinateFrom = new Coordinate();
             Coordinate coordinateTo = new Coordinate();
 
@@ -128,6 +130,7 @@ public class RequestController {
             request.setRadius(Double.parseDouble(radius));
 
             //e.g. 1986-04-08 12:30
+
             DateTimeRange dateTimeRange = new DateTimeRange();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

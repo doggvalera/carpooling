@@ -16,8 +16,10 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+import static lv.ctco.Consts.*;
+
 @RestController
-@RequestMapping(path = "/rides")
+@RequestMapping(path = RIDE_PATH)
 public class RideController {
 
     @Autowired
@@ -33,7 +35,8 @@ public class RideController {
     }
 
     @Transactional
-    @RequestMapping(path = "/bydriver/{ID}", method = RequestMethod.GET)
+
+    @RequestMapping(path = BY_DRIVER_PATH + "/{ID}", method = RequestMethod.GET)
     public ResponseEntity<?> showRidesByDriver(@PathVariable("ID") int id) {
         User user = userRepository.findOne(id);
         List<Ride> rideList = rideRepository.getByDriver(user);
@@ -41,7 +44,7 @@ public class RideController {
     }
 
     @Transactional
-    @RequestMapping(path = "/bypassanger/{ID}", method = RequestMethod.GET)
+    @RequestMapping(path = BY_PASSANGER_PATH + "/{ID}", method = RequestMethod.GET)
     public ResponseEntity<?> showRidesPassenger(@PathVariable("ID") int id) {
         rideRepository.findAll();
         User user = userRepository.findOne(id);

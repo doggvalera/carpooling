@@ -75,6 +75,7 @@ public class Offer {
         return delayTime;
     }
 
+
     public Coordinate getCoordinateFrom() {
         return coordinateFrom;
     }
