@@ -2,10 +2,8 @@ package lv.ctco.controllers;
 
 
 import lv.ctco.HeaderBuilder;
-import lv.ctco.entities.Coordinate;
-import lv.ctco.entities.DateTimeRange;
-import lv.ctco.entities.Request;
-import lv.ctco.entities.User;
+import lv.ctco.LoginContext;
+import lv.ctco.entities.*;
 import lv.ctco.repository.RequestRepository;
 import lv.ctco.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +31,25 @@ public class RequestController {
     RequestRepository requestRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 
     @Transactional
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllRequests() {
         requestRepository.findAll();
         return new ResponseEntity<>(requestRepository.findAll(), HttpStatus.OK);
+    }
+
+    @Transactional
+    @RequestMapping(path = USER_PATH, method = RequestMethod.GET)
+    public ResponseEntity<?> getRequestsForUser() {
+        User user = loginContext.getCurrentUser();
+        if (user != null) {
+            List<Request> requestList = requestRepository.selectRequestsByPassenger(user);
+            return new ResponseEntity<>(requestList, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Transactional

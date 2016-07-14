@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -45,8 +46,8 @@ public class OfferController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(path = "/bydriver", method = RequestMethod.GET)
-    public ResponseEntity<?> getOffersByDriverID() {
+    @RequestMapping(path = USER_PATH, method = RequestMethod.GET)
+    public ResponseEntity<?> getOffersForUser() {
         User user = loginContext.getCurrentUser();
         if (user != null) {
             List<Offer> offerList = offerRepository.getByDriverID(user);

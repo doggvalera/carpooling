@@ -17,13 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static lv.ctco.Consts.*;
 
 @RestController
-@RequestMapping(path = USER_PATH + OFFER_PATH)
+@RequestMapping(path = USER_PATH  + OFFER_PATH)
 public class OfferByUserController {
 
     @Autowired
@@ -33,10 +34,11 @@ public class OfferByUserController {
     @Autowired
     LoginContext loginContext;
 
+
     @Transactional
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
-
+    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b, Principal princ) {
+        princ.getName();
         User user = loginContext.getCurrentUser();
         if (user != null) {
             offer.setUser(user);
