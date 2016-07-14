@@ -24,19 +24,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-
         httpSecurity.authorizeRequests()
-                .antMatchers("/rides/**").authenticated()
-                .and().httpBasic().and()
+                .antMatchers("/rides/**").authenticated().and().formLogin()
+                .loginPage("/index.html")
+                .permitAll().and()
+                .httpBasic().and()
                 .logout().logoutSuccessUrl("/login?logout").and()
                 .csrf().disable();
         httpSecurity.headers().frameOptions().disable();
     }
 
-//    @Bean
-//    public PasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
 
     @Autowired
@@ -45,11 +46,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication().dataSource(dataSource)
 //                .passwordEncoder(passwordEncoder())
                 .usersByUsernameQuery(
-                        "select email, password, 1 from USERS where email=?")
+                        "select EMAIL, PASSWORD, 1 from USERS where EMAIL=?")
                 .authoritiesByUsernameQuery(
-                        "select email,user_role " +
+                        "select EMAIL, user_role " +
                                 "from users u " +
                                 "INNER JOIN user_roles ur ON ur.userfk = u.id " +
-                                "where u.email=?");
+                                "where u.EMAIL=?");
     }
 }

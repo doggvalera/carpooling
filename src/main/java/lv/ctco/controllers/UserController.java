@@ -65,6 +65,11 @@ public class UserController {
             user.setSurname(surname);
             user.setEmail(email);
             user.setPassword(password);
+
+            UserRoles userRoles = new UserRoles();
+            userRoles.setRole("USER");
+
+            user.setUserRoles(Arrays.asList(userRoles));
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.CREATED);
         }
