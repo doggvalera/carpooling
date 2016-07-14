@@ -42,8 +42,6 @@ public class OfferByUserControllerTest {
     @Test
     public void testPostOfferOK() throws Exception {
         User user = StandartBuilder.buildUser();
-        user.setEmail("email1");
-
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
         Offer offer = new Offer();
@@ -56,8 +54,6 @@ public class OfferByUserControllerTest {
     @Test
     public void testUpdateOfferByIdOK() throws Exception {
         User user = StandartBuilder.buildUser();
-        user.setEmail("email2");
-
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
         Offer offer = new Offer();
@@ -75,8 +71,6 @@ public class OfferByUserControllerTest {
     @Test
     public void testUpdateOfferByIdFailed() throws Exception {
         User user = StandartBuilder.buildUser();
-        user.setEmail("email3");
-
         Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
         Offer offer = new Offer();
