@@ -2,6 +2,7 @@ package lv.ctco.controllers;
 
 import com.jayway.restassured.internal.http.HTTPBuilder;
 import lv.ctco.HeaderBuilder;
+import lv.ctco.LoginContext;
 import lv.ctco.entities.*;
 import lv.ctco.repository.OfferRepository;
 import lv.ctco.repository.UserRepository;
@@ -28,6 +29,8 @@ public class OfferController {
     OfferRepository offerRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    LoginContext loginContext;
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getOffers() {
