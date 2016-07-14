@@ -1,6 +1,7 @@
 package lv.ctco.controllers;
 
 import io.restassured.RestAssured;
+import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
 import lv.ctco.entities.Request;
@@ -16,16 +17,13 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.*;
 
+import static lv.ctco.Consts.*;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
 @WebAppConfiguration
 @IntegrationTest("server.port:8090")
-
 public class RequestControllerTest {
-
-    public static final int OK = HttpStatus.OK.value();
-    public static final int NOT_FOUND = HttpStatus.NOT_FOUND.value();
-    public static final int CREATED = HttpStatus.CREATED.value();
 
     @Before
     public void before() {
@@ -34,41 +32,44 @@ public class RequestControllerTest {
     }
 
     @Test
-    public void postRequestTest() {
-        User user = new User();
-        user.setName("John");
-        user.setSurname("The first");
-        user.setEmail("john@john.com");
-        user.setPassword("1234");
-        user.setId(10000);
+    public void testGetAllRequestsOK() throws Exception{
+        get(REQUEST_PATH).then().statusCode(OK);
+    }
+
+    @Test
+    public void testGetRequestByIDFailed() throws Exception{
+        get(REQUEST_PATH + BAD_ID).then().statusCode(NOT_FOUND);
+    }
+
+    @Test
+    public void testGetRequestByIDOK() throws Exception{
+        User user = StandartBuilder.buildUser();
+        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
         Request request = new Request();
         request.setUser(user);
 
-        given().
-                body(request).
-                        when().contentType("application/json").post("/requests/users/1").then().statusCode(201);
+        Headers headersRequest = given().contentType(JSON).body(request).when().post(headersUser.getValue("Location") + REQUEST_PATH).getHeaders();
 
-
-        /*
-        Headers header = given().contentType("application/json").body(user).when().post("/users").getHeaders();
-
-        Request request = new Request();
-
-        given().contentType("application/json")
-                .body(request).when()
-                .post(header.getValue("Location") + "r/requests/").then()
-                .statusCode(CREATED);
-*/
+        get(headersRequest.getValue("Location")).then().statusCode(OK);
     }
 
     @Test
-    public void getAllRequestsTestOk() {
-        get("/requests").then().statusCode(200);
-
+    public void testDeleteRequestByIDFailed() throws Exception{
+        delete(REQUEST_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 
+    @Test
+    public void testDeleteRequestByIDOK() throws Exception{
+        User user = StandartBuilder.buildUser();
+        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
+        Request request = new Request();
+        request.setUser(user);
 
+        Headers headersRequest = given().contentType(JSON).body(request).when().post(headersUser.getValue("Location") + REQUEST_PATH).getHeaders();
+
+        delete(headersRequest.getValue("Location")).then().statusCode(OK);
+    }
 
 }

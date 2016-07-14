@@ -5,6 +5,7 @@ import io.restassured.http.Headers;
 import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
 import lv.ctco.entities.Offer;
+import lv.ctco.entities.Request;
 import lv.ctco.entities.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import static io.restassured.RestAssured.delete;
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
 import static lv.ctco.Consts.*;
@@ -26,79 +28,45 @@ import static lv.ctco.Consts.*;
 
 public class OfferControllerTest {
 
-    @Before
-    public void before() {
-        RestAssured.port = 8090;
-        RestAssured.defaultParser = Parser.JSON;
-    }
-
     @Test
-    public void testGetNotFound() {
-        get("/something").then().statusCode(NOT_FOUND);
-    }
-
-    @Test
-    public void testGetAllOK() {
+    public void testGetAllOffersOK() throws Exception{
         get(OFFER_PATH).then().statusCode(OK);
     }
 
     @Test
-    public void testGetOneNotFound() {
-        get(OFFER_PATH + "/-1").then().statusCode(NOT_FOUND);
-    }
-
-//    @Test
-//    public void testGetOneOK() {
-//        User user = new User();
-//        user.setName("name");
-//        user.setSurname("surname");
-//        user.setPassword("password");
-//        user.setEmail("mail");
-//
-//        Headers headersU = given().contentType(JSON).body(user).when().post(USER_PATH).getHeaders();
-//
-//        Offer offer = new Offer();
-//        offer.setUser(user);
-//        offer.setPassengersAmount(3);
-//
-//        Headers headerO = given().contentType(JSON).body(offer).when().post(OFFER_PATH + "/" + user.getId()).getHeaders();
-//
-//        get(headerO.getValue("Location")).then().statusCode(OK);
-//    }
-
-    @Test
-    public void testGetOneNotFount() {
+    public void testGetOfferByIDFailed() throws Exception{
         get(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 
     @Test
-    public void testGetOneOK() {
-        User user = new User();
-        user.setName("name");
-        user.setSurname("surname");
-        user.setPassword("password");
-        user.setEmail("mail");
+    public void testGetRequestByIDOK() throws Exception{
+        User user = StandartBuilder.buildUser();
+        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+
         Offer offer = new Offer();
         offer.setUser(user);
-        offer.setPassengersAmount(3);
 
-        get(OFFER_PATH + BY_DRIVER_PATH + "/" + user.getId()).then().statusCode(NOT_FOUND);
+        Headers headersRequest = given().contentType(JSON).body(offer).when().post(headersUser.getValue("Location") + OFFER_PATH).getHeaders();
+
+        get(headersRequest.getValue("Location")).then().statusCode(OK);
     }
 
     @Test
-    public void testPostNotFound() {
-        User user = new User();
-        user.setName("name");
-        user.setSurname("surname");
-        user.setPassword("password");
-        user.setEmail("mail");
-        user.setId(1);
+    public void testDeleteRequestByIDFailed() throws Exception{
+        delete(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
+    }
+
+    @Test
+    public void testDeleteRequestByIDOK() throws Exception{
+        User user = StandartBuilder.buildUser();
+        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+
         Offer offer = new Offer();
         offer.setUser(user);
-        offer.setPassengersAmount(3);
 
-        given().contentType(JSON).body(offer).when().post(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
+        Headers headersRequest = given().contentType(JSON).body(offer).when().post(headersUser.getValue("Location") + OFFER_PATH).getHeaders();
 
+        delete(headersRequest.getValue("Location")).then().statusCode(OK);
     }
 
 }

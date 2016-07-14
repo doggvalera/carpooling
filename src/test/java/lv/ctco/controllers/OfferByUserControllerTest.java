@@ -65,7 +65,8 @@ public class OfferByUserControllerTest {
         offer.setUser(user);
         offer.setPassengersAmount(5);
 
-        given().contentType(JSON).body(offer2).when().put(headersOffer.getValue("Location")).then().statusCode(OK);
+        String[] paths = headersOffer.getValue("Location").split("/");
+        given().contentType(JSON).body(offer2).when().put(headersUser.getValue("Location") + "/" + paths[paths.length-2] + "/" + paths[paths.length-1]).then().statusCode(OK);
     }
 
     @Test

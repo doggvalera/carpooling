@@ -33,7 +33,7 @@ public class OfferByUserController {
             offer.setUser(user);
             offerRepository.save(offer);
 
-            HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, USER_PATH + "/{uid}" + OFFER_PATH + "/{id}",user.getId(), offer.getId());
+            HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, OFFER_PATH + "/{id}",user.getId(), offer.getId());
 
             return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         }

@@ -54,7 +54,10 @@ public class OfferController {
 
     @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteOfferById(@PathVariable("id") int id) {
-        offerRepository.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        if (offerRepository.exists(id)) {
+            offerRepository.delete(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
