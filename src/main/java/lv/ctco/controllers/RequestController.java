@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/request")
+@RequestMapping("/requests")
 
 public class RequestController {
 
@@ -32,7 +32,7 @@ public class RequestController {
     UserRepository userRepository;
 
     @Transactional
-    @RequestMapping(path = "/requests",method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<?> getAllRequests() {
         requestRepository.findAll();
         return new ResponseEntity<>(requestRepository.findAll(), HttpStatus.OK);
@@ -48,7 +48,8 @@ public class RequestController {
     }
 
     @Transactional
-    @RequestMapping(path = "/users/{userId2}/requests", method = RequestMethod.GET)
+    @RequestMapping(path = "/users/{userId2}", method = RequestMethod.GET)
+
     public ResponseEntity<?> getRequestsByUserId(@PathVariable("userId2") int id) {
         if (userRepository.exists(id)) {
             User user = userRepository.findOne(id);
@@ -60,7 +61,7 @@ public class RequestController {
 
 
     @Transactional
-    @RequestMapping(path = "/users/{userId2}/requests", method = RequestMethod.POST)
+    @RequestMapping(path = "/users/{userId2}", method = RequestMethod.POST)
     public ResponseEntity<?> postRequestForUser(@PathVariable("userId2") int userId, @RequestBody Request request,
                                                      UriComponentsBuilder b) {
         if (userRepository.exists(userId)) {
@@ -98,11 +99,13 @@ public class RequestController {
     }
     */
 
-    @RequestMapping(path = "/users/{userId2}/requests", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
+    @RequestMapping(path = "/users/{userId2}", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> postRequestForUser(@PathVariable("userId2") String userId2, @RequestParam String earliestDeparture,
                                                 String latestDeparture,
-                                                String latitude,
-                                                String longitude,
+                                                String latitudeFrom,
+                                                String longitudeFrom,
+                                                String latitudeTo,
+                                                String longitudeTo,
                                                 String radius,
                                                 UriComponentsBuilder b) {
         int userId = Integer.parseInt(userId2);
@@ -111,13 +114,23 @@ public class RequestController {
             Request request = new Request();
             request.setUser(user);
 
-            Coordinate coordinate = new Coordinate();
-            coordinate.setLatitude(Double.parseDouble(latitude));
-            coordinate.setLongitude(Double.parseDouble(longitude));
-            request.setCoordinate(coordinate);
+
+            Coordinate coordinateFrom = new Coordinate();
+            Coordinate coordinateTo = new Coordinate();
+
+            coordinateFrom.setLatitude(Double.parseDouble(latitudeFrom));
+            coordinateFrom.setLongitude(Double.parseDouble(longitudeFrom));
+
+            coordinateTo.setLatitude(Double.parseDouble(latitudeTo));
+            coordinateTo.setLongitude(Double.parseDouble(longitudeTo));
+
+            request.setCoordinateFrom(coordinateFrom);
+            request.setCoordinateTo(coordinateTo);
+
             request.setRadius(Double.parseDouble(radius));
 
-            //1986-04-08 12:30
+            //e.g. 1986-04-08 12:30
+
             DateTimeRange dateTimeRange = new DateTimeRange();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
 

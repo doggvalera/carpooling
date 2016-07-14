@@ -17,7 +17,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
-
 import static lv.ctco.Consts.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -41,6 +40,11 @@ public class OfferControllerTest {
     @Test
     public void testGetAllOK() {
         get(OFFER_PATH).then().statusCode(OK);
+    }
+
+    @Test
+    public void testGetOneNotFound() {
+        get(OFFER_PATH + "/-1").then().statusCode(NOT_FOUND);
     }
 
 //    @Test
@@ -93,8 +97,8 @@ public class OfferControllerTest {
         offer.setUser(user);
         offer.setPassengersAmount(3);
 
-
         given().contentType(JSON).body(offer).when().post(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
+
     }
 
 }

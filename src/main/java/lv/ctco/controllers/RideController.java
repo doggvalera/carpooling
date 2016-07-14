@@ -35,6 +35,7 @@ public class RideController {
     }
 
     @Transactional
+
     @RequestMapping(path = BY_DRIVER_PATH + "/{ID}", method = RequestMethod.GET)
     public ResponseEntity<?> showRidesByDriver(@PathVariable("ID") int id) {
         User user = userRepository.findOne(id);

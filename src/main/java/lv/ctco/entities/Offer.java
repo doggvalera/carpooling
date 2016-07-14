@@ -13,8 +13,21 @@ public class Offer {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
+
     @Embedded
-    private Coordinate coordinate;
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "latitudeFrom")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "longitudeFrom")),
+    })
+    private Coordinate coordinateFrom;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "latitudeTo")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "longitudeTo")),
+    })
+    private Coordinate coordinateTo;
+
     @Embedded
     private DateTimeRange date;
     @Column(name = "TIME")
@@ -62,12 +75,21 @@ public class Offer {
         return delayTime;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+
+    public Coordinate getCoordinateFrom() {
+        return coordinateFrom;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinateFrom(Coordinate coordinateFrom) {
+        this.coordinateFrom = coordinateFrom;
+    }
+
+    public Coordinate getCoordinateTo() {
+        return coordinateTo;
+    }
+
+    public void setCoordinateTo(Coordinate coordinateTo) {
+        this.coordinateTo = coordinateTo;
     }
 
     public void setDelayTime(int delay) {

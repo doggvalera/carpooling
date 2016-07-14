@@ -18,8 +18,20 @@ public class Request {
     private DateTimeRange date;
     @Column(name = "RADIUS")
     private double radius;
+
     @Embedded
-    private Coordinate coordinate;
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "latitudeFrom")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "longitudeFrom")),
+    })
+    private Coordinate coordinateFrom;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "latitude", column = @Column(name = "latitudeTo")),
+            @AttributeOverride(name = "longitude", column = @Column(name = "longitudeTo")),
+    })
+    private Coordinate coordinateTo;
 
     public int getId() {
         return id;
@@ -53,11 +65,19 @@ public class Request {
         this.radius = radius;
     }
 
-    public Coordinate getCoordinate() {
-        return coordinate;
+    public Coordinate getCoordinateTo() {
+        return coordinateTo;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
+    public void setCoordinateTo(Coordinate coordinateTo) {
+        this.coordinateTo = coordinateTo;
+    }
+
+    public Coordinate getCoordinateFrom() {
+        return coordinateFrom;
+    }
+
+    public void setCoordinateFrom(Coordinate coordinateFrom) {
+        this.coordinateFrom = coordinateFrom;
     }
 }

@@ -47,7 +47,8 @@ public class RequestControllerTest {
 
         given().
                 body(request).
-                        when().contentType("application/json").post("/request/users/1/requests").then().statusCode(201);
+                        when().contentType("application/json").post("/requests/users/1").then().statusCode(201);
+
 
         /*
         Headers header = given().contentType("application/json").body(user).when().post("/users").getHeaders();
@@ -63,7 +64,8 @@ public class RequestControllerTest {
 
     @Test
     public void getAllRequestsTestOk() {
-        get("request/requests").then().statusCode(200);
+        get("/requests").then().statusCode(200);
+
     }
 
 
