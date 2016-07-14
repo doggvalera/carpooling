@@ -80,24 +80,16 @@ public class RequestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-/*
-    @Transactional
-    @RequestMapping(path = "/users/{userId2}/requests/{requestId}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteRequestById(@PathVariable("userId2") int userId2, @PathVariable("requestId") int requestId) {
 
-        if (userRepository.exists(userId2)) {
-            User user = userRepository.findOne(userId2);
-            List<Request> requestList = requestRepository.selectRequestsByPassenger(user);
-            Request request = requestList.stream().filter((s) -> s.getId() == requestId).findFirst().get();
-            requestList.remove(request);
-            requestRepository.save(requestList);
-            return new ResponseEntity<>(HttpStatus.OK);
-        }
-        else
+    @Transactional
+    @RequestMapping(path = "/{requestId}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteRequestById(@PathVariable("requestId") int requestId) {
+        if ( requestRepository.findOne(requestId) == null )
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        requestRepository.delete(requestId);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
-    */
 
     @RequestMapping(path = "/users/{userId2}", method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> postRequestForUser(@PathVariable("userId2") String userId2, @RequestParam String earliestDeparture,
