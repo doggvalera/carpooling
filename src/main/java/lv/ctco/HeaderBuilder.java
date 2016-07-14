@@ -4,6 +4,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+
 import static lv.ctco.Consts.OFFER_PATH;
 
 public class HeaderBuilder {

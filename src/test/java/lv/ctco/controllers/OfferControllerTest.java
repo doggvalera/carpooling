@@ -82,7 +82,7 @@ public class OfferControllerTest {
         offer.setUser(user);
         offer.setPassengersAmount(3);
 
-        get(OFFER_PATH + BY_DRIVER_PATH + user.getId()).then().statusCode(NOT_FOUND);
+        get(OFFER_PATH + BY_DRIVER_PATH + "/" + user.getId()).then().statusCode(NOT_FOUND);
     }
 
     @Test
