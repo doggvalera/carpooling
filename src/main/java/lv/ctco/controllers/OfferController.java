@@ -46,7 +46,7 @@ public class OfferController {
     public ResponseEntity<?> getOffersByDriverID(@PathVariable("id") int id) {
         if (userRepository.exists(id)) {
             User user = userRepository.findOne(id);
-            List<Offer> offerList = offerRepository.getByDriverID(user);
+            List<Offer> offerList = offerRepository.getByDriver(user);
             return new ResponseEntity<>(offerList, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
