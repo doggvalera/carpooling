@@ -1,16 +1,15 @@
 package lv.ctco.controllers;
 
+import lv.ctco.HeaderBuilder;
 import lv.ctco.RequestOfferMatcher;
 import lv.ctco.entities.Offer;
 import lv.ctco.entities.Request;
 import lv.ctco.repository.RequestRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,4 +31,5 @@ public class OfferByRequestController {
         List<Offer> offers = requestOfferMatcher.findOffersByRequest(request);
         return new ResponseEntity<>(offers, HttpStatus.OK);
     }
+
 }

@@ -18,12 +18,20 @@ public class RequestOfferMatcher {
         List<Offer> offers = offerRepository.findAll();
         List<Offer> offersNew = new ArrayList<>();
         List<Offer> offerReturn = new ArrayList<>();
+        List<Offer> offersEqualData = new ArrayList<>();
         for(Offer offer: offers){    //filter offers which have at least one place
             if(offer.getPassengersAmount()>offer.getRequests().size()){
                 offersNew.add(offer);
             }
         }
-        for(Offer offer: offersNew){  //filter offers which is less than radius
+
+        for(Offer offer: offersNew) {
+            if(offer.getDate().equals(request.getDate())){
+                offersEqualData.add(offer);
+            }
+        }
+
+        for(Offer offer: offersEqualData){  //filter offers which is less than radius
             if(request.getRadius()>= Math.sqrt(
                     Math.pow((request.getCoordinateFrom().getLatitude()-offer.getCoordinateFrom().getLatitude()),2) +
                             Math.pow((request.getCoordinateFrom().getLongitude()-offer.getCoordinateFrom().getLongitude()),2))

@@ -122,5 +122,9 @@ public class Offer {
     public void setPassengersAmount(int passengersAmount) {
         this.passengersAmount = passengersAmount;
     }
+
+    public void add(Request request) {
+        requests.add(request);
+    }
 }
 
