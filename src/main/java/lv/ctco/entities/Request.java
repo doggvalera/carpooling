@@ -80,4 +80,35 @@ public class Request {
     public void setCoordinateFrom(Coordinate coordinateFrom) {
         this.coordinateFrom = coordinateFrom;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Request request = (Request) o;
+
+        if (Double.compare(request.radius, radius) != 0) return false;
+        if (coordinateFrom != null ? !coordinateFrom.equals(request.coordinateFrom) : request.coordinateFrom != null)
+            return false;
+        if (coordinateTo != null ? !coordinateTo.equals(request.coordinateTo) : request.coordinateTo != null)
+            return false;
+        if (date != null ? !date.equals(request.date) : request.date != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        result = id;
+        result = 31 * result + (user != null ? user.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        temp = Double.doubleToLongBits(radius);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        result = 31 * result + (coordinateFrom != null ? coordinateFrom.hashCode() : 0);
+        result = 31 * result + (coordinateTo != null ? coordinateTo.hashCode() : 0);
+        return result;
+    }
 }

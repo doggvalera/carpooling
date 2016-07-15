@@ -115,9 +115,7 @@ public class OfferByUserController {
             editedOffer.setCoordinateTo(offer.getCoordinateTo());
             editedOffer.setCoordinateFrom(offer.getCoordinateFrom());
             editedOffer.setDate(offer.getDate());
-            editedOffer.setDelayTime(offer.getDelayTime());
             editedOffer.setPassengersAmount(offer.getPassengersAmount());
-            editedOffer.setTime(offer.getTime());
             User user = loginContext.getCurrentUser();
             editedOffer.setUser(user);
             return new ResponseEntity<>(HttpStatus.OK);
