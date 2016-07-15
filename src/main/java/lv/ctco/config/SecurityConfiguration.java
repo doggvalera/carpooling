@@ -26,12 +26,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
+<<<<<<< HEAD
                 .antMatchers("/**").fullyAuthenticated().and().formLogin()
                 .loginPage("/index.html").permitAll().and()
                 .httpBasic().and()
                 .logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
+=======
+                .antMatchers("/**").authenticated().and().formLogin()
+                .loginPage("/index.html").permitAll().and()
+                .httpBasic().and().antMatcher("/index.html").anonymous().and().antMatcher("signupform.html").anonymous().and()
+                .logout().logoutSuccessUrl("/login?logout").and()
+>>>>>>> ab2b6909eec7f25188feaeeadc441d11524c8959
                 .csrf().disable();
-        httpSecurity.headers().frameOptions().disable();
+                httpSecurity.headers().frameOptions().disable();
+
     }
 
     @Bean
@@ -54,3 +62,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                                 "where u.EMAIL=?");
     }
 }
+
