@@ -37,7 +37,6 @@ public class RequestByOfferControllerTest {
     @Test
     public void testGetRequestByOffer() throws Exception {
 
-        Request request = StandartBuilder.buildRequest();
         Offer offer = StandartBuilder.buildOffer();
 
         Headers headersRequest = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
@@ -52,6 +51,6 @@ public class RequestByOfferControllerTest {
         Headers headersOffer = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
         Headers headersRequest = given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).getHeaders();
         String[] headerParts = headersRequest.getValue("Location").split("/");
-        put(headersOffer.getValue("Location") + REQUEST_PATH + "/" + headerParts[headerParts.length - 1]).then().statusCode(OK);
+        given().contentType(JSON).body("").put(headersOffer.getValue("Location") + "/" + REQUEST_PATH + "/" + headerParts[headerParts.length - 1]).then().statusCode(OK);
     }
 }

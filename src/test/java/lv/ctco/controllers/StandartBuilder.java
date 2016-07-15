@@ -53,7 +53,6 @@ public class StandartBuilder {
         offer.setCarDescription("Ferrarry");
         offer.setDate(dateTimeRange);
         offer.setPassengersAmount(3);
-        offer.setTime("123");
 
         return offer;
     }
