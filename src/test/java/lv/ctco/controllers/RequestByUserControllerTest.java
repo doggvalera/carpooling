@@ -16,6 +16,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import static io.restassured.RestAssured.get;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.preemptive;
 import static lv.ctco.Consts.*;
 import static org.junit.Assert.*;
 
@@ -29,44 +30,30 @@ public class RequestByUserControllerTest {
     public void before() {
         RestAssured.port = 8090;
         RestAssured.defaultParser = Parser.JSON;
+        RestAssured.authentication = preemptive().basic("admin@a.a", "admin");
     }
 
     @Test
-    public void testGetRequestsByUserIdFailed() throws Exception {
+    public void testGetRequestForUserOK() throws Exception {
         User user = StandartBuilder.buildUser();
         given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
-
-        get(USER_PATH + BAD_ID + REQUEST_PATH).then().statusCode(NOT_FOUND);
-    }
-
-    @Test
-    public void testGetRequestsByUserIdOK() throws Exception {
-        User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
-
-        get(headersUser.getValue("Location") + REQUEST_PATH).then().statusCode(OK);
-
-    }
-
-    @Test
-    public void testPostRequestForUserFailed() throws Exception {
-        User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
 
         Request request = new Request();
         request.setUser(user);
 
-        given().contentType(JSON).body(request).when().post(USER_PATH + BAD_ID + REQUEST_PATH).then().statusCode(NOT_FOUND);
+        given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).then().statusCode(CREATED);
+        get(USER_PATH + REQUEST_PATH).then().statusCode(OK);
     }
+
 
     @Test
     public void testPostRequestForUserOK() throws Exception {
         User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
 
         Request request = new Request();
         request.setUser(user);
 
-        given().contentType(JSON).body(request).when().post(headersUser.getValue("Location") + REQUEST_PATH).then().statusCode(CREATED);
+        given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).then().statusCode(CREATED);
     }
 }

@@ -29,6 +29,7 @@ public class RequestControllerTest {
     public void before() {
         RestAssured.port = 8090;
         RestAssured.defaultParser = Parser.JSON;
+        RestAssured.authentication = preemptive().basic("admin@a.a", "admin");
     }
 
     @Test
@@ -44,12 +45,12 @@ public class RequestControllerTest {
     @Test
     public void testGetRequestByIDOK() throws Exception{
         User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
 
         Request request = new Request();
         request.setUser(user);
 
-        Headers headersRequest = given().contentType(JSON).body(request).when().post(headersUser.getValue("Location") + REQUEST_PATH).getHeaders();
+        Headers headersRequest = given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).getHeaders();
 
         get(headersRequest.getValue("Location")).then().statusCode(OK);
     }
@@ -62,12 +63,12 @@ public class RequestControllerTest {
     @Test
     public void testDeleteRequestByIDOK() throws Exception{
         User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
 
         Request request = new Request();
         request.setUser(user);
 
-        Headers headersRequest = given().contentType(JSON).body(request).when().post(headersUser.getValue("Location") + REQUEST_PATH).getHeaders();
+        Headers headersRequest = given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).getHeaders();
 
         delete(headersRequest.getValue("Location")).then().statusCode(OK);
     }

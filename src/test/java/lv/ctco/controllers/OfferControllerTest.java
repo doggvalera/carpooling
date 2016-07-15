@@ -16,9 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import static io.restassured.RestAssured.delete;
-import static io.restassured.RestAssured.get;
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
 import static lv.ctco.Consts.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -27,6 +25,13 @@ import static lv.ctco.Consts.*;
 @IntegrationTest("server.port:8090")
 
 public class OfferControllerTest {
+
+    @Before
+    public void before() {
+        RestAssured.port = 8090;
+        RestAssured.defaultParser = Parser.JSON;
+        RestAssured.authentication = preemptive().basic("admin@a.a", "admin");
+    }
 
     @Test
     public void testGetAllOffersOK() throws Exception{
@@ -39,14 +44,14 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void testGetRequestByIDOK() throws Exception{
+    public void testGetOfferByIDOK() throws Exception{
         User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
 
         Offer offer = new Offer();
         offer.setUser(user);
 
-        Headers headersRequest = given().contentType(JSON).body(offer).when().post(headersUser.getValue("Location") + OFFER_PATH).getHeaders();
+        Headers headersRequest = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
 
         get(headersRequest.getValue("Location")).then().statusCode(OK);
     }
@@ -59,12 +64,12 @@ public class OfferControllerTest {
     @Test
     public void testDeleteRequestByIDOK() throws Exception{
         User user = StandartBuilder.buildUser();
-        Headers headersUser = given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).getHeaders();
+        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
 
         Offer offer = new Offer();
         offer.setUser(user);
 
-        Headers headersRequest = given().contentType(JSON).body(offer).when().post(headersUser.getValue("Location") + OFFER_PATH).getHeaders();
+        Headers headersRequest = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
 
         delete(headersRequest.getValue("Location")).then().statusCode(OK);
     }

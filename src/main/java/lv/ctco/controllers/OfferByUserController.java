@@ -60,26 +60,6 @@ public class OfferByUserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @Transactional
-    @RequestMapping(path = "/without", method = RequestMethod.POST)
-    public ResponseEntity<?> postOfferForUser(@PathVariable("userId") int userId, @RequestBody Offer offer,
-                                              UriComponentsBuilder b) {
-        if (userRepository.exists(userId)) {
-            User user = userRepository.findOne(userId);
-            offer.setUser(user);
-            offerRepository.save(offer);
-
-            UriComponents uriComponents =
-                    b.path("/offers/{id}").buildAndExpand(offer.getId());
-            HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.setLocation(uriComponents.toUri());
-
-            return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
-        }
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    }
-
     @RequestMapping(method = RequestMethod.POST, consumes = "application/x-www-form-urlencoded")
     public ResponseEntity<?> postOfferForUser(@RequestParam String earliestDeparture,
                                               String latestDeparture,
