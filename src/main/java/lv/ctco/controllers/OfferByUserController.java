@@ -46,8 +46,7 @@ public class OfferByUserController {
 
     @Transactional
     @RequestMapping(path = "", method = RequestMethod.POST)
-    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b, Principal princ) {
-        princ.getName();
+    public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
         User user = loginContext.getCurrentUser();
         if (user != null) {
             offer.setUser(user);
@@ -105,8 +104,7 @@ public class OfferByUserController {
             HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, OFFER_PATH + "/{id}", offer.getId());
             return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         }
-        else
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @Transactional
