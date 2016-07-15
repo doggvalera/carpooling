@@ -16,3 +16,4 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }
+
