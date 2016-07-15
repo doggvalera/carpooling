@@ -27,13 +27,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeRequests()
                 .antMatchers("/**").authenticated().and().formLogin()
-                .loginPage("/index.html").permitAll().and()
-                .httpBasic().and().antMatcher("/index.html").anonymous().and().antMatcher("signupform.html").anonymous().and()
-                .logout().logoutSuccessUrl("/login?logout").and()
+                .loginPage("/index.html")
+                .permitAll().and()
+                .httpBasic().and()
+                .logout().permitAll().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).and()
                 .csrf().disable();
                 httpSecurity.headers().frameOptions().disable();
 
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

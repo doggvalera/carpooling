@@ -1,8 +1,14 @@
 function loadOffers() {
-    return fetch('http://localhost:8080/users/offers')
-        .then(function(response) {
-            return response.json();
-        });
+    return $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/users/offers',
+        dataType: 'json',
+        statusCode: {
+            200: function (data) {
+                return data;
+            }
+        }
+    });
 }
 
 function drawOfferList() {
@@ -27,46 +33,41 @@ function drawOfferList() {
 
 function handleSubmit(event){
 
-    var form = new FormData(document.offer);
-    fetch('http://localhost:8080/users/offers', {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "POST",
-
-        body: JSON.stringify({
-            id: document.offer.id.value,
-            car: document.offer.car.value
-
-
-            //lastName: document.user.lastName.value
-        })
-
-    })
-        .then(function() {
-            var offerList = document.querySelector(".offer-list");
-            document.body.removeChild(offerList.parentNode)
-            drawOfferList();
-        });
-
+    $.ajax({
+        type: 'POST',
+        url: 'http://localhost:8080/users/offers',
+        data: JSON.stringify({
+            "id": document.offer.id.value,
+            "car": document.offer.car.value
+        }),
+        contentType: 'application/json',
+        dataType: 'json',
+        statusCode: {
+            201: function () {
+                var offerList = document.querySelector(".offer-list");
+                if (offerList) {
+                    document.body.removeChild(offerList.parentNode)
+                }
+                drawOfferList();
+            }
+        }
+    });
     event.preventDefault();
 }
 
 function removeElement(event, id){
     console.log(id);
-    fetch('http://localhost:8080/offers/'+id, {
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        method: "DELETE"})
-        .then(function() {
-            var offerList = document.querySelector(".offer-list");
-            document.body.removeChild(offerList.parentNode)
-            drawOfferList();
-
-        });
+    $.ajax({
+        type: 'DELETE',
+        url: 'http://localhost:8080/offers/' + id,
+        statusCode: {
+            200: function () {
+                var offerList = document.querySelector(".offer-list");
+                document.body.removeChild(offerList.parentNode)
+                drawOfferList();
+            }
+        }
+    });
     event.preventDefault();
 }
 
