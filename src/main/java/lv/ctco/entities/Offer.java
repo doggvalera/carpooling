@@ -1,6 +1,7 @@
 package lv.ctco.entities;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -10,6 +11,8 @@ public class Offer {
     @Column(name = "ID")
     @GeneratedValue
     private int id;
+    @OneToMany(fetch = FetchType.EAGER)
+    private List<Request> requests;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
@@ -39,12 +42,8 @@ public class Offer {
     @Column(name = "PASSENGERS")
     private int passengersAmount;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public List<Request> getRequests() {
+        return requests;
     }
 
     public User getUser() {
@@ -53,6 +52,18 @@ public class Offer {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setRequests(List<Request> requests) {
+        this.requests = requests;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public DateTimeRange getDate() {
