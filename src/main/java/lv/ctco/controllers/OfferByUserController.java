@@ -17,6 +17,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 import static lv.ctco.Consts.*;
@@ -49,6 +50,7 @@ public class OfferByUserController {
         User user = loginContext.getCurrentUser();
         if (user != null) {
             offer.setUser(user);
+            offer.setRequests(new ArrayList<>());
             offerRepository.save(offer);
 
             HttpHeaders responseHeaders = HeaderBuilder.buildHeader(b, OFFER_PATH + "/{id}",user.getId(), offer.getId());
