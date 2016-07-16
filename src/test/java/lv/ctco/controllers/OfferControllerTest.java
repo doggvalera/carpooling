@@ -22,13 +22,13 @@ import static lv.ctco.Consts.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
 @WebAppConfiguration
-@IntegrationTest("server.port:8090")
+@IntegrationTest("server.port:8092")
 
 public class OfferControllerTest {
 
     @Before
     public void before() {
-        RestAssured.port = 8090;
+        RestAssured.port = 8092;
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.authentication = preemptive().basic("admin@a.a", "admin");
     }
@@ -45,11 +45,7 @@ public class OfferControllerTest {
 
     @Test
     public void testGetOfferByIDOK() throws Exception{
-        User user = StandartBuilder.buildUser();
-        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
-
         Offer offer = new Offer();
-        offer.setUser(user);
 
         Headers headersRequest = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
 
@@ -57,17 +53,13 @@ public class OfferControllerTest {
     }
 
     @Test
-    public void testDeleteRequestByIDFailed() throws Exception{
+    public void testDeleteOfferByIDFailed() throws Exception{
         delete(OFFER_PATH + BAD_ID).then().statusCode(NOT_FOUND);
     }
 
     @Test
-    public void testDeleteRequestByIDOK() throws Exception{
-        User user = StandartBuilder.buildUser();
-        given().contentType(JSON).body(user).when().post(USER_PATH + WITHOUT_INPUT_PATH).then().statusCode(CREATED);
-
+    public void testDeleteOfferByIDOK() throws Exception{
         Offer offer = new Offer();
-        offer.setUser(user);
 
         Headers headersRequest = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
 
