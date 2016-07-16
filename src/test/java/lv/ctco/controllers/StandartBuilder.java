@@ -33,6 +33,7 @@ public class StandartBuilder {
         request.setCoordinateTo(coordinate);
         request.setRadius(100);
         request.setDate(dateTimeRange);
+        request.setUser(buildUser());
 
         return request;
     }
@@ -53,7 +54,7 @@ public class StandartBuilder {
         offer.setCarDescription("Ferrarry");
         offer.setDate(dateTimeRange);
         offer.setPassengersAmount(3);
-
+        offer.setUser(buildUser());
         return offer;
     }
 }

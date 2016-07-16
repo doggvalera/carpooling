@@ -5,6 +5,7 @@ import io.restassured.parsing.Parser;
 import lv.ctco.CarPoolingApplication;
 import lv.ctco.RequestOfferMatcher;
 import lv.ctco.entities.*;
+import lv.ctco.repository.OfferRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,6 +35,8 @@ public class RequestOfferMatcherTest {
 
     @Autowired
     RequestOfferMatcher requestOfferMatcher;
+    @Autowired
+    OfferRepository offerRepository;
 
     DateTimeRange dateTimeRange = new DateTimeRange() {{
         setEarliestDeparture(LocalDateTime.of(2000, Month.NOVEMBER, 23, 11, 23));
@@ -109,6 +112,7 @@ public class RequestOfferMatcherTest {
 
     @Test
     public void testFindOfferByRequest() throws Exception {
+        offerRepository.deleteAll();
         given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).then().statusCode(CREATED);
         given().contentType(JSON).body(offer1).when().post(USER_PATH + OFFER_PATH).then().statusCode(CREATED);
         given().contentType(JSON).body(offer2).when().post(USER_PATH + OFFER_PATH).then().statusCode(CREATED);

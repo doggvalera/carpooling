@@ -37,7 +37,7 @@ import static lv.ctco.Consts.REQUEST_PATH;
 
         @Transactional
         @RequestMapping(path = "/{rid}", method = RequestMethod.PUT)
-        public ResponseEntity<?> postRequestForOffer(@PathVariable("rid") int rid,
+        public ResponseEntity<?> putRequestForOffer(@PathVariable("rid") int rid,
                                                     @PathVariable("oid") int id) {
             Offer offer = offerRepository.findOne(id);
             Request request = requestRepository.getOne(rid);
