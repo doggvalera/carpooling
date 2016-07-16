@@ -1,6 +1,7 @@
 package lv.ctco.entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -12,7 +13,7 @@ public class Offer {
     @GeneratedValue
     private int id;
     @OneToMany(fetch = FetchType.EAGER)
-    private List<Request> requests;
+    private List<Request> requests = new ArrayList<>();
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;

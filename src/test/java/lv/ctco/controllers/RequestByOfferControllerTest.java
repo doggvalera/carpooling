@@ -24,12 +24,12 @@ import static lv.ctco.Consts.*;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = CarPoolingApplication.class)
 @WebAppConfiguration
-@IntegrationTest("server.port:8090")
+@IntegrationTest("server.port:8091")
 public class RequestByOfferControllerTest {
 
     @Before
     public void before() {
-        RestAssured.port = 8090;
+        RestAssured.port = 8091;
         RestAssured.defaultParser = Parser.JSON;
         RestAssured.authentication = preemptive().basic("admin@a.a", "admin");
     }
@@ -51,6 +51,6 @@ public class RequestByOfferControllerTest {
         Headers headersOffer = given().contentType(JSON).body(offer).when().post(USER_PATH + OFFER_PATH).getHeaders();
         Headers headersRequest = given().contentType(JSON).body(request).when().post(USER_PATH + REQUEST_PATH).getHeaders();
         String[] headerParts = headersRequest.getValue("Location").split("/");
-        given().contentType(JSON).body("").put(headersOffer.getValue("Location") + "/" + REQUEST_PATH + "/" + headerParts[headerParts.length - 1]).then().statusCode(OK);
+        given().put(headersOffer.getValue("Location") + REQUEST_PATH + "/" + headerParts[headerParts.length - 1]).then().statusCode(OK);
     }
 }
