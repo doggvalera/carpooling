@@ -17,6 +17,7 @@
         }
     </script>
 
+
 </head>
 <body>
 <div class="container">
@@ -35,31 +36,31 @@
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="name" id="name" class="form-control input-sm"
-                                           placeholder="First Name" min="2" max="16">
+                                           placeholder="First Name" min="2" max="16" required>
                                 </div>
                             </div>
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="text" name="surname" id="surname" class="form-control input-sm"
-                                           placeholder="Last Name" min="2" max="16">
+                                           placeholder="Last Name" min="2" max="16" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <input type="email" name="email" id="email" class="form-control input-sm"
-                                   placeholder="Email Address">
+                                   placeholder="Email Address" required>
                         </div>
 
                         <div class="row">
                             <div class="col-xs-6 col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <input type="password" name="password" id="password" class="form-control input-sm"
-                                            placeholder="Password" min="4" max="16" >
+                                            placeholder="Password" min="4" max="16" required>
                                 </div>
                             </div>
                         </div>
-                        <input type="submit" value="Register" class="btn btn-success btn-block"/>
+                        <input type="submit" value="Register" class="btn btn-success btn-block" />
                         <input type="button" value="Back" class="btn btn-warning btn-block" onclick="Redirect();" />
                     </form>
                 </div>
