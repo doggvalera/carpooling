@@ -6,7 +6,7 @@
     <script src="js/locationpicker.jquery.js"></script>
     <script src="http://www.w3schools.com/lib/w3data.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="js/jquery.datetimepicker.min.css"/ >
+    <link rel="stylesheet" type="text/css" href="js/jquery.datetimepicker.min.css" >
     <script src="js/jquery.datetimepicker.full.min.js"></script>
 
     <script src="js/main.js"></script>
@@ -79,18 +79,16 @@
                     locationNameInput: $('#us3-address')
                 },
                 oninitialized: function(component) {
-                    var addressTo = $(component).locationpicker('map').location.addressComponents.addressLine1;
-                    $('#addressFrom').val(addressTo);
+                    copyLocation(component)
                 },
                 onchanged: function(currentLocation, radius, isMarkerDropped) {
-                    var addressTo = $(this).locationpicker('map').location.addressComponents.addressLine1;
-                    $('#addressTo').val(addressTo);
+                    copyLocation(this)
 
                 }
             });
             function copyLocation(element) {
-                var addressTo = $(component).locationpicker('map').location.addressComponents.addressLine1;
-                $('#addressFrom').val(addressTo);
+                var addressTo = $(element).locationpicker('map').location.addressComponents.addressLine1;
+                $('#addressTo').val(addressTo);
                 var longTo=$(element).locationpicker('map').location.addressComponents.longitude;
                 var latTo=$(element).locationpicker('map').location.addressComponents.latitude;
                 $('#longTo').val(longTo);
