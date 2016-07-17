@@ -38,7 +38,7 @@ function handleSubmit(event){
         url: 'http://localhost:8080/users/offers',
         data: JSON.stringify({
             "id": document.offer.id.value,
-            "car": document.offer.car.value
+            "carDescription": document.offer.car.value
         }),
         contentType: 'application/json',
         dataType: 'json',
