@@ -32,6 +32,26 @@ function drawRequestList() {
     });
 }
 
+function drawOfferList() {
+    loadRequests().then(function (offers) {
+        var offerListTemplate = Handlebars.compile(document.querySelector('#offer-list').innerHTML);
+        var offerTemplate = Handlebars.compile(document.querySelector('#offer').innerHTML);
+
+        var offerList = '';
+        requests.forEach(function (offers) {
+            offerList += offerTemplate(offers);
+        });
+
+        var offerList = offerListTemplate({
+            body: offerList
+        });
+
+        var offerListContainer = document.createElement('div');
+        offerListContainer.innerHTML = offerList;
+        document.body.appendChild(offerListContainer);
+    });
+}
+
 function handleSubmit(event) {
 
     $.ajax({
@@ -66,6 +86,21 @@ function removeElement(event, id) {
                 var requestList = document.querySelector(".request-list");
                 document.body.removeChild(requestList.parentNode)
                 drawRequestList();
+            }
+        }
+    });
+    event.preventDefault();
+}
+
+function loadOffersByRequest(event, id) {
+    console.log(id);
+    $.ajax({
+        type: 'GET',
+        url: 'http://localhost:8080/requests/' + id + '/offers',
+        statusCode: {
+            200: function (data) {
+                var offersList = document.querySelector(".offer-list");
+                drawOfferList();
             }
         }
     });
