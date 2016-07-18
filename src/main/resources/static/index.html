@@ -15,9 +15,6 @@
 </head>
 <body>
 
-<input type="button" onclick="location.href='/allOffers.html';" value="View offer" />
-<input type="button" onclick="location.href='/allRequests.html';" value="View request" />
-
     <div class="container">
         <div w3-include-html="createnavbar.html"></div>
     </div>
@@ -26,7 +23,7 @@
         <div class="col-md-6 col-md-offset-3">
 
             Location: <input type="text" id="us2-address" style="width: 200px"/>
-            Radius: <input type="text" id="us2-radius"/>
+            Radius: <input type="text" id="us2radius" name="us2radius"/>
 
             <div id="us2" style="width: 500px; height: 400px;"></div>
             Lat.: <input type="text" id="us2-lat"/>
@@ -37,7 +34,7 @@
                 inputBinding: {
                     latitudeInput: $('#us2-lat'),
                     longitudeInput: $('#us2-lon'),
-                    radiusInput: $('#us2-radius'),
+                    radiusInput: $('#us2radius'),
                     locationNameInput: $('#us2-address')
 
                 },
@@ -56,6 +53,7 @@
                 var latFrom=$(element).locationpicker('map').location.addressComponents.latitude;
                 $('#longFrom').val(longFrom);
                 $('#latFrom').val(latFrom);
+
             }
             w3IncludeHTML();
 
@@ -142,16 +140,16 @@
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="earliestDeparture" id="time1picker" class="form-control input-sm" placeholder="Earliest departure time">
+                                <input type="text" name="time1picker" id="time1picker" class="form-control input-sm" placeholder="Earliest departure time">
                             </div>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-6">
                             <div class="form-group">
-                                <input type="text" name="latestDeparture" id="time2picker" class="form-control input-sm" placeholder="Latest departure time">
+                                <input type="text" name="time2picker" id="time2picker" class="form-control input-sm" placeholder="Latest departure time">
                             </div>
                         </div><div class="col-xs-6 col-sm-6 col-md-6">
                         <div class="form-group">
-                            <input type="text" name="dateDeparture" id="datepicker" class="form-control input-sm" placeholder="Departure date">
+                            <input type="text" name="datepicker" id="datepicker" class="form-control input-sm" placeholder="Departure date">
                         </div>
                     </div>
                     </div>
@@ -187,6 +185,7 @@
                     <input type="hidden" name="latFrom" id="latFrom">
                     <input type="hidden" name="longTo" id="longTo">
                     <input type="hidden" name="latTo" id="latTo">
+                    <input type="hidden" name="radius" id="radius">
 
                     <input type="submit" value="Submit" class="btn btn-info btn-block" style="margin-top: 40px; margin-bottom: 80px" >
 

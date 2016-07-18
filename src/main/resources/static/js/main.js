@@ -27,7 +27,7 @@ function setMode(_state){
 $(function(){
     $('#datepicker').datetimepicker({
         timepicker:false,
-        format:'d.m.Y'
+        format:'Y-m-d'
     })
     $('#time1picker').datetimepicker({
         datepicker:false,
@@ -49,14 +49,14 @@ $(function () {
                 url: 'http://localhost:8080/users/offers',
                 data: JSON.stringify({
 
-                    "carDescription": document.offerRequest.carDescription,
+                    "carDescription": document.offerRequest.carDescription.value,
                     "coordinateFrom": {
-                        "latitude": document.offerRequest.latFrom,
-                        "longitude": document.offerRequest.longFrom
+                        "latitude": document.offerRequest.latFrom.value,
+                        "longitude": document.offerRequest.longFrom.value
                     },
                     "date": {
-                        "earliestDeparture": document.offerRequest.dateDeparture+ "T" + document.offerRequest.earliestDeparture,
-                        "latestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.latestDeparture
+                        "earliestDeparture": document.offerRequest.datepicker.value + "T" + document.offerRequest.time1picker.value,
+                        "latestDeparture": document.offerRequest.datepicker.value + "T" + document.offerRequest.time2picker.value
                     }
                 }),
                 contentType: 'application/json',
@@ -73,14 +73,14 @@ $(function () {
                 url: 'http://localhost:8080/users/requests',
                 data: JSON.stringify({
 
-                    "radius": document.offerRequest.radius,
+                    "radius": document.offerRequest.us2radius,
                     "coordinateFrom": {
-                        "latitude": document.offerRequest.latFrom,
-                        "longitude": document.offerRequest.longFrom
+                        "latitude": document.offerRequest.latFrom.value,
+                        "longitude": document.offerRequest.longFrom.value
                     },
                     "date": {
-                        "earliestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.earliestDeparture,
-                        "latestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.latestDeparture
+                        "earliestDeparture": document.offerRequest.datepicker.value + "T" + document.offerRequest.time1picker.value,
+                        "latestDeparture": document.offerRequest.datepicker.value + "T" + document.offerRequest.time2picker.value
                     }
                 }),
                 contentType: 'application/json',
