@@ -38,8 +38,8 @@ function drawOfferList() {
         var offerTemplate = Handlebars.compile(document.querySelector('#offer').innerHTML);
 
         var offerList = '';
-        requests.forEach(function (offers) {
-            offerList += offerTemplate(offers);
+        offers.forEach(function (offer) {
+            offerList += offerTemplate(offer);
         });
 
         var offerList = offerListTemplate({

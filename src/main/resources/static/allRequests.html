@@ -26,7 +26,7 @@
         </div>
     </script>
 <body>
-<input type="button" onclick="location.href='/main.html';" value="Add new request" />
+<input type="button" onclick="location.href='/index.html';" value="Add new request" />
 </body>
     <script id="request" type="text/x-handlebars-template">
         <div class="request">
@@ -36,6 +36,8 @@
                 <tr>
                     <td>{{user.name}} </td>
                     <td>{{user.surname}} </td>
+                    <td>{{date.earliestDeparture}} </td>
+                    <td>{{date.latestDeparture}} </td>
 
                     <td> <button onclick="removeElement(event, {{id}})">x</button> </td>
                     <td> <button onclick="loadOffersByRequest(event, {{id}})">Offers</button> </td>
