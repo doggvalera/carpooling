@@ -47,6 +47,7 @@ public class OfferByUserController {
     @Transactional
     @RequestMapping(path = "", method = RequestMethod.POST)
     public ResponseEntity<?> postOffer(@RequestBody Offer offer, UriComponentsBuilder b) {
+        System.out.println("We are here");
         User user = loginContext.getCurrentUser();
         if (user != null) {
             offer.setUser(user);

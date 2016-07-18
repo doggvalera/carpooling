@@ -1,3 +1,4 @@
+
 function showDiv() {
     document.getElementById('carDescription').style.display = "block";
 }
@@ -37,58 +38,60 @@ $(function(){
         format:'H:i'
     })
 })
-function chooseByState(event){
-    if (state=="driver"){
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8080/users/offers',
-            data: JSON.stringify({
-                "id": document.offerRequest.id.value,
 
-                "carDescription": document.offerRequest.carDescription.value,
-                "coordinateFrom": {
-                    "latitude": document.offerRequest.latFrom.value,
-                    "longitude": document.offerRequest.longFrom.value
-                },
-                "date":{
-                    "earliestDeparture":document.offerRequest.dateDeparture.value +"T" + document.offerRequest.earliestDeparture.value,
-                    "latestDeparture":document.offerRequest.dateDeparture.value + "T" + document.offerRequest.latestDeparture.value
+
+$(function () {
+    $('form[name="offerRequest"]').submit(function (event) {
+        event.preventDefault();
+        if (state == "driver") {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/users/offers',
+                data: JSON.stringify({
+
+                    "carDescription": document.offerRequest.carDescription,
+                    "coordinateFrom": {
+                        "latitude": document.offerRequest.latFrom,
+                        "longitude": document.offerRequest.longFrom
+                    },
+                    "date": {
+                        "earliestDeparture": document.offerRequest.dateDeparture+ "T" + document.offerRequest.earliestDeparture,
+                        "latestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.latestDeparture
+                    }
+                }),
+                contentType: 'application/json',
+                dataType: 'json',
+                statusCode: {
+                    201: alert("OK")
+
                 }
-            }),
-            contentType: 'application/json',
-            dataType: 'json',
-            statusCode: {
-                201: alert("OK")
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8080/users/requests',
+                data: JSON.stringify({
 
-            }
-        });
-    }
-    else {
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:8080/users/requests',
-            data: JSON.stringify({
-                "id": document.request.id.value,
-                "radius": document.request.radius.value,
-                "coordinateFrom": {
-                    "latitude": document.offerRequest.latFrom.value,
-                    "longitude": document.offerRequest.longFrom.value
-                },
-                "date": {
-                    "earliestDeparture": document.offerRequest.dateDeparture.value + "T" + document.offerRequest.earliestDeparture.value,
-                    "latestDeparture": document.offerRequest.dateDeparture.value + "T" + document.offerRequest.latestDeparture.value
+                    "radius": document.offerRequest.radius,
+                    "coordinateFrom": {
+                        "latitude": document.offerRequest.latFrom,
+                        "longitude": document.offerRequest.longFrom
+                    },
+                    "date": {
+                        "earliestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.earliestDeparture,
+                        "latestDeparture": document.offerRequest.dateDeparture + "T" + document.offerRequest.latestDeparture
+                    }
+                }),
+                contentType: 'application/json',
+                dataType: 'json',
+                statusCode: {
+                    201: alert("OK")
+
                 }
-            }),
-            contentType: 'application/json',
-            dataType: 'json',
-            statusCode: {
-                201: alert("OK")
+            });
 
-            }
-        });
+        }
 
-    }
-
-    event.preventDefault();
-
-}
+    });
+});
